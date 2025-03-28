@@ -1,4 +1,3 @@
-# zidaneandjulieeatgrandma-scookies
 # Tower Defense Simulator
 
 ## Who are you working with? (you may work in teams of up to 2)
