@@ -11,7 +11,7 @@ class Enemy(ABC):
         pass
 
     @abstractmethod
-    def die(self)
+    def die(self):
         pass
 
     def take_damage(self, damage: int):
