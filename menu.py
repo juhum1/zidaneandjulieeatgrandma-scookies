@@ -25,6 +25,11 @@ class Menu:
             text = font.render(f"{tower['name']} - ${tower['cost']}", True, (255, 255, 255))
             self.screen.blit(text, (self.x_offset + 80, y_pos + 20))
 
+        # Draw the currency
+        font = pygame.font.Font(None, 36)
+        currency_text = font.render(f"Currency: ${self.currency}", True, (255, 255, 255))
+        self.screen.blit(currency_text, (self.x_offset + 100, y_pos + 600))
+
     def buy_tower(self, pos):
         x, y = pos
         if x < self.x_offset:  

@@ -8,7 +8,7 @@ import menu
 pygame.init()
 board_cols = 4  
 board_rows = 10  
-tile_size = 100
+tile_size = 80
 width, height = board_cols * tile_size * 2, board_rows * tile_size
 width += 100
 size = (width, height)
@@ -19,7 +19,7 @@ running = True
 
 
 game_board = board.Board(board_cols, board_rows, tile_size)
-menu = menu.Menu(screen, board_cols * tile_size, 200, height, 500)
+menu = menu.Menu(screen, board_cols * tile_size, width, height, 500)
 
 while running:
     fps = clock.tick(60)
