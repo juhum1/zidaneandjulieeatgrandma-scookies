@@ -5,9 +5,9 @@ class Tile:
         self.height = height
         match image:
             case "grass":
-                self.image = pygame.image.load("assets/grass.png")
+                self.image = pygame.image.load("assets/grass_tile.png")
             case _:
-                self.image = pygame.image.load("assets/grass.png")
+                self.image = pygame.image.load("assets/grass_tile.png")
 
 
         self.item = None  # Placeholder for item, can be replaced with an actual item class

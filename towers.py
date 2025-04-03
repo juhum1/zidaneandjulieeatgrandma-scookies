@@ -18,11 +18,11 @@ class Classic(Tower):
     def __init__(self):
         self.maxHealth = 150
         self.currentHealth = self.maxHealth 
-        self.sprite = sprite
+        self.sprite = "assets/classic.png"
         self.range = 1
         self.price = 100
     
-    def attack(self, enemy):
+    def attack_enemy(self, enemy):
         super().attack(enemy)
         
 
