@@ -6,6 +6,7 @@ class Enemy(ABC):
         self.health = health
         self.attack = attack
 
+
     @abstractmethod
     def attack_player(self):
         pass
@@ -14,6 +15,7 @@ class Enemy(ABC):
     def die(self):
         pass
 
+    @abstractmethod
     def take_damage(self, damage: int):
         self.health -= damage
         if self.health <= 0:
