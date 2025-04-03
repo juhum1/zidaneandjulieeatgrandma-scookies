@@ -35,16 +35,19 @@ class Board:
 
 
     def death(self):
+        currency = 0
         for i in range(self.rows):
             for j in range(self.cols):
                 if self.array[i][j].item is not None:
                     if self.array[i][j].item.currentHealth <= 0:
+                        if isinstance(self.array[i][j].item, enemies.Enemy):
+                            currency += 10
                         self.array[i][j].item = None
+        return currency 
+
+
 
     def add_enemy(self, enemy, col):
-
         if col < self.cols and self.array[0][col].item is None:
             self.array[0][col].item = enemy
 
-    def draw(self, screen):
-        pass
