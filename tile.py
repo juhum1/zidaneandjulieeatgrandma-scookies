@@ -1,12 +1,16 @@
 class Tile:
-    def __init__(self, width, height):
+    def __init__(self, width, height, image):
         self.width = width
         self.height = height
-        self.image = None
+        match image:
+            case "grass":
+                self.image = pygame.image.load("assets/grass.png")
+            case _:
+                self.image = pygame.image.load("assets/grass.png")
+
+
         self.item = None  # Placeholder for item, can be replaced with an actual item class
     
 
-    def set_image(self, image_path):
-        self.image = pygame.image.load(image_path)
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
-    
+    def __str__(self):
+        return f"Tile({self.width}, {self.height}), Image: {self.image}, Item: {self.item})"
