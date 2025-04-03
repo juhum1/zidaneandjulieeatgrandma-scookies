@@ -7,8 +7,10 @@ import towers
 pygame.init()
 board_cols = 4  
 board_rows = 10  
-tile_size = 80
-size = width, height = board_cols * tile_size, board_rows * tile_size
+tile_size = 100
+width, height = board_cols * tile_size * 2, board_rows * tile_size
+width += 100
+size = (width, height)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Tower Defense")
 clock = pygame.time.Clock()
@@ -26,7 +28,7 @@ while running:
     # fill the screen with grass tiles
     for i in range(game_board.rows):
         for j in range(game_board.cols):
-            tile_obj = game_board.array[i][j]  # Get the tile
+            tile_obj = game_board.array[i][j]  
             screen.blit(tile_obj.image, (j * game_board.tile_size, i * game_board.tile_size))
 
     currency = 500
