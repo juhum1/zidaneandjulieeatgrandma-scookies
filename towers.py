@@ -9,10 +9,9 @@ class Tower(ABC):
 
 
     @abstractmethod
-    def attack(self, enemy):
+    def attack_enemy(self, enemy):
         enemy.health -= self.damage
-        if enemy.health <= 0:
-            enemy.die()
+
         
     
 class Classic(Tower):

@@ -1,15 +1,17 @@
 from abc import ABC, abstractmethod
 
 class Enemy(ABC):
-    def __init__(self, name: str, health: int, attack: int):
-        self.name = name
-        self.health = health
-        self.attack = attack
-
+    def __init__(self):
+        self.currentHealth = self.maxHealth
+        self.maxHealth = None
+        self.damage = 50
+        self.attackSpeed = 1
+        self.speed = 1
+        self.sprite = None
 
     @abstractmethod
-    def attack_player(self):
-        pass
+    def attack_tower(self, tower):
+        tower.currentHealth -= self.damage
 
     @abstractmethod
     def die(self):
