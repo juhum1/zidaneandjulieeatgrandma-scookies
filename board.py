@@ -10,7 +10,6 @@ class Board:
         self.tile_size = tile_size
         self.array = [[tile.Tile(tile_size, tile_size) for _ in range(cols)] for _ in range(rows)]
 
-
     def __str__(self):
         board_str = ""
         for row in self.array:
@@ -31,21 +30,18 @@ class Board:
                             self.array[i][j].item = None  
                         elif isinstance(self.array[next_row][j].item, towers.Tower):  
                             # enemy doesn't move, attacks tower
-                            enemy.attack_player()
-
+                            enemy.attack_tower()
 
     def death(self):
         currency = 0
         for i in range(self.rows):
             for j in range(self.cols):
                 if self.array[i][j].item is not None:
-                    if self.array[i][j].item.currentHealth <= 0:
-                        if isinstance(self.array[i][j].item, enemies.Enemy):
-                            currency += 10
-                        self.array[i][j].item = None
+                    if isinstance(self.array[i][j].item, enemies.Enemy):
+                        if self.array[i][j].item.currentHealth <= 0:
+                            currency += self.array[i][j].item.currency 
+                            self.array[i][j].item = None
         return currency 
-
-
 
     def add_enemy(self, enemy, col):
         if col < self.cols and self.array[0][col].item is None:

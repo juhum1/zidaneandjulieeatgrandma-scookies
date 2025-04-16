@@ -1,6 +1,7 @@
 import pygame
 import towers
 import enemies
+
 class Menu:
     def __init__(self, screen, x_offset, width, height, currency):
         self.screen = screen
@@ -9,8 +10,8 @@ class Menu:
         self.height = height
         self.currency = currency
         self.tower_options = [
-            {"name": "Basic Tower", "cost": 100, "image": pygame.image.load("assets/classic.png")},
-            {"name": "Fast Tower", "cost": 150, "image": pygame.image.load("assets/tower2.png")},
+            {"name": "Basic Tower", "cost": towers.Classic().price, "image": pygame.image.load(towers.Classic().sprite)},
+            {"name": "Fast Tower", "cost": towers.Fast().price, "image": pygame.image.load(towers.Fast().sprite)},
             
         ]
         self.selected_tower = None
@@ -40,14 +41,11 @@ class Menu:
                 if self.currency >= tower["cost"]:
                     match tower["name"]:
                         case "Basic Tower":
-                            self.selected_tower = towers.Classic()
-                            print(f"Selected {tower['name']}")
-                            return tower
-                        case "Fast Tower":
                             self.selected_tower = tower
                             print(f"Selected {tower['name']}")
-
-
+                        case "Fast Tower":
+                            self.selected_tower = tower  
+                            print(f"Selected {tower['name']}")
 
                     return tower
                 else:
@@ -62,7 +60,10 @@ class Menu:
         row = y // board.tile_size
         if 0 <= col < board.cols and 0 <= row < board.rows and board.array[row][col].item is None:
             board.array[row][col].item = self.selected_tower
-            self.currency -= self.selected_tower.price
+            self.currency -= self.selected_tower["cost"]
             self.selected_tower = None
             return True
         return False
+    
+    def update_currency(self, currency):
+        self.currency += currency
