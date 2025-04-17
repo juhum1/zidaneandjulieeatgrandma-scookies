@@ -17,17 +17,17 @@ class Board:
         return board_str
 
     def move_enemies(self):
-        for i in range(self.rows-1, -1, -1):
+        for i in range(self.rows-2, -1, -1):
             for j in range(self.cols):
                 enemy = self.array[i][j].item
                 if enemy is not None and isinstance(enemy, enemies.Enemy):
-                    if enemy.health <= 0:
+                    if enemy.currentHealth <= 0:
                         self.array[i][j].item = None  # Remove dead enemy
                     else:
                         next_row = i + 1
                         if next_row < self.rows and self.array[next_row][j].item is None:  
                             self.array[next_row][j].item = enemy  
-                            self.array[i][j].item = None  
+                            self.array[i][j].item = None 
                         elif isinstance(self.array[next_row][j].item, towers.Tower):  
                             # enemy doesn't move, attacks tower
                             enemy.attack_tower()

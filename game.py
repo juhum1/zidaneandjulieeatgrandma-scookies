@@ -23,9 +23,13 @@ menu = menu.Menu(screen, board_cols * tile_size, width, height, 500)
 
 # game starts at wave 0 but not created yet
 wave = 1
+enemies_spawned = 0
+enemy_spawned_time = pygame.time.get_ticks()
+enemy_moved_time = pygame.time.get_ticks()
 
 while running:
     fps = clock.tick(60)
+    cur_time = pygame.time.get_ticks()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -38,25 +42,35 @@ while running:
                     success = menu.place_tower(game_board, event.pos)
                     if success:
                         print("Tower placed!")
+    
     if wave == 0:
         #separate screen with welcome to tower defense game and introduction
         wave += 1 
+        enemy_spawned_time = pygame.time.get_ticks()
+    
 
     if wave == 1:
         for i in range(game_board.rows):
             for j in range(game_board.cols):
                 tile_obj = game_board.array[i][j]  
-                screen.blit(tile_obj.image, (j * game_board.tile_size, i * game_board.tile_size))
+                screen.blit(tile_obj.image, (j * tile_size, i * tile_size))
                 pygame.draw.rect(screen, (0, 0, 0), (j * game_board.tile_size, i * game_board.tile_size, game_board.tile_size, game_board.tile_size), 1)
                 # towers are not being drawn
                 if isinstance(tile_obj.item, towers.Tower):   # drawing towers 
                     screen.blit(pygame.image.load(tile_obj.item.sprite), (j * tile_size, i * tile_size))
                 if isinstance(tile_obj.item, enemies.Enemy):    #drawing enemies
                     screen.blit(pygame.image.load(tile_obj.item.sprite), (j * tile_size, i * tile_size))
+        
+        if cur_time - enemy_spawned_time >= 500:
+            if (enemies_spawned < 10):
+                game_board.add_enemy(enemies.Goblin(), random.randint(0, 3))
+                enemy_spawned_time = cur_time        
+                enemies_spawned += 1
+        
+        if cur_time - enemy_moved_time >= 1000:
+            game_board.move_enemies()
+            enemy_moved_time = cur_time
 
-        for i in range(20):
-            if (i % 2 == 0): # space out enemy spawn
-                add_enemy(enemies.Goblin(), random.randint(0, 3)
         menu.update_currency(game_board.death())
 
 

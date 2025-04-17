@@ -36,6 +36,12 @@ class Goblin(Enemy):
         self.currency = 10
         self.sprite = "assets/goblin.png"
 
+    def die(self):
+        pass
+
+    def attack_tower(self, tower):
+        tower.currentHealth -= self.damage
+
     def take_damage(self, damage: int):
         super().take_damage(damage)
 
