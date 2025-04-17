@@ -40,7 +40,7 @@ class Goblin(Enemy):
         pass
 
     def attack_tower(self, tower):
-        tower.currentHealth -= self.damage
+        super().attack_tower(tower)
 
     def take_damage(self, damage: int):
         super().take_damage(damage)

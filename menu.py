@@ -31,13 +31,12 @@ class Menu:
         currency_text = font.render(f"Currency: ${self.currency}", True, (255, 255, 255))
         self.screen.blit(currency_text, (self.x_offset + 100, y_pos + 600))
 
-    def buy_tower(self, pos):
-        x, y = pos
-        if x < self.x_offset:  
+    def buy_tower(self, x_pos, y_pos):
+        if x_pos < self.x_offset:  
             return None
         for index, tower in enumerate(self.tower_options):
-            y_pos = index * 120 + 20
-            if y_pos <= y <= y_pos + 80:  # Clicked on a tower
+            y = index * 120 + 20
+            if y <= y_pos <= y + 80:  # Clicked on a tower
                 if self.currency >= tower["cost"]:
                     match tower["name"]:
                         case "Basic Tower":
@@ -52,12 +51,11 @@ class Menu:
                     print("Not enough currency!")
         return None
 
-    def place_tower(self, board, pos):
+    def place_tower(self, board, x_pos, y_pos):
         if not self.selected_tower:
             return False
-        x, y = pos
-        col = x // board.tile_size
-        row = y // board.tile_size
+        col = x_pos // board.tile_size
+        row = y_pos // board.tile_size
         if 0 <= col < board.cols and 0 <= row < board.rows and board.array[row][col].item is None:
             board.array[row][col].item = self.selected_tower
             self.currency -= self.selected_tower["cost"]

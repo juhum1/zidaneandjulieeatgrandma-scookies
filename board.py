@@ -4,7 +4,7 @@ import towers
 import enemies
 
 class Board:
-    def __init__(self, cols=4, rows=10, tile_size=80): # col x row 
+    def __init__(self, cols, rows, tile_size): # col x row 
         self.rows = rows
         self.cols = cols
         self.tile_size = tile_size
@@ -15,6 +15,10 @@ class Board:
         for row in self.array:
             board_str += " ".join(str(cell) for cell in row) + "\n"
         return board_str
+    
+    def add_enemy(self, enemy, col):
+        if col < self.cols and self.array[0][col].item is None:
+            self.array[0][col].item = enemy
 
     def move_enemies(self):
         for i in range(self.rows-2, -1, -1):
@@ -32,6 +36,22 @@ class Board:
                             # enemy doesn't move, attacks tower
                             enemy.attack_tower()
 
+    def tower_attack(self):
+        for i in range(-1, self.rows-3, 1):
+            for j in range(self.cols):
+                tower = self.array[self.rows-2][j].item
+                if tower is not None and isinstance(tower, towers.Tower):
+                    if tower.currentHealth <= 0:
+                        self.array[self.rows-2][j] = None   # remove dead tower
+                    else:
+                        enemy = self.array[i][j].item
+                        if enemy is not None and isinstance(enemy, enemies.Enemy):
+                            if enemy.currentHealth > 0:
+                                tower.attack_enemy(enemy)
+
+
+
+
     def death(self):
         currency = 0
         for i in range(self.rows):
@@ -42,8 +62,4 @@ class Board:
                             currency += self.array[i][j].item.currency 
                             self.array[i][j].item = None
         return currency 
-
-    def add_enemy(self, enemy, col):
-        if col < self.cols and self.array[0][col].item is None:
-            self.array[0][col].item = enemy
 

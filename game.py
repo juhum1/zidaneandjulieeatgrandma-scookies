@@ -35,11 +35,11 @@ while running:
             running = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if menu.buy_tower(event.pos):  
+            if menu.buy_tower(event.pos[0], event.pos[1]):  
                 print("Tower selected!")
             else:
                 if menu.selected_tower:
-                    success = menu.place_tower(game_board, event.pos)
+                    success = menu.place_tower(game_board, event.pos[0], event.pos[1])
                     if success:
                         print("Tower placed!")
     
@@ -47,7 +47,7 @@ while running:
         #separate screen with welcome to tower defense game and introduction
         wave += 1 
         enemy_spawned_time = pygame.time.get_ticks()
-    
+ 
 
     if wave == 1:
         for i in range(game_board.rows):
@@ -60,17 +60,18 @@ while running:
                     screen.blit(pygame.image.load(tile_obj.item.sprite), (j * tile_size, i * tile_size))
                 if isinstance(tile_obj.item, enemies.Enemy):    #drawing enemies
                     screen.blit(pygame.image.load(tile_obj.item.sprite), (j * tile_size, i * tile_size))
-        
-        if cur_time - enemy_spawned_time >= 500:
+ 
+        if cur_time - enemy_spawned_time >= 3000:
             if (enemies_spawned < 10):
                 game_board.add_enemy(enemies.Goblin(), random.randint(0, 3))
                 enemy_spawned_time = cur_time        
                 enemies_spawned += 1
-        
-        if cur_time - enemy_moved_time >= 1000:
+ 
+        if cur_time - enemy_moved_time >= 2500:
             game_board.move_enemies()
             enemy_moved_time = cur_time
 
+        game_board.tower_attack()
         menu.update_currency(game_board.death())
 
 
