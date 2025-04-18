@@ -34,7 +34,7 @@ class Board:
                             self.array[i][j].item = None 
                         elif isinstance(self.array[next_row][j].item, towers.Tower):  
                             # enemy doesn't move, attacks tower
-                            enemy.attack_tower()
+                            enemy.attack_tower(self.array[next_row][j].item)
 
     def tower_attack(self):
         for i in range(-1, self.rows-3, 1):
