@@ -10,7 +10,7 @@ class Tile:
                 self.image = pygame.image.load("assets/grass_tile.png")
 
 
-        self.item = None  # Placeholder for item, can be replaced with an actual item class
+        self.item = None  
     
 
     def __str__(self):

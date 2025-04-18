@@ -4,7 +4,7 @@ import towers
 import enemies
 
 class Board:
-    def __init__(self, cols, rows, tile_size): # col x row 
+    def __init__(self, cols, rows, tile_size):
         self.rows = rows
         self.cols = cols
         self.tile_size = tile_size
@@ -37,18 +37,22 @@ class Board:
                             enemy.attack_tower(self.array[next_row][j].item)
 
     def tower_attack(self):
-        for i in range(-1, self.rows-3, 1):
+        for i in range(self.rows):
             for j in range(self.cols):
-                tower = self.array[self.rows-2][j].item
+                tile = self.array[i][j]
+                tower = tile.item
                 if tower is not None and isinstance(tower, towers.Tower):
                     if tower.currentHealth <= 0:
-                        self.array[self.rows-2][j] = None   # remove dead tower
+                        self.array[i][j].item = None  # remove dead tower
                     else:
-                        enemy = self.array[i][j].item
-                        if enemy is not None and isinstance(enemy, enemies.Enemy):
-                            if enemy.currentHealth > 0:
-                                tower.attack_enemy(enemy)
-
+                        for k in range(i-1, max(i - tower.range - 1, -1), -1):
+                            enemy_tile = self.array[k][j]
+                            enemy = enemy_tile.item
+                            if enemy is not None and isinstance(enemy, enemies.Enemy):
+                                if enemy.currentHealth > 0:
+                                    print("tower_attack")
+                                    tower.attack_enemy(enemy)
+                                    break  # only attack one enemy
 
 
 

@@ -45,6 +45,7 @@ class Fast(Tower):
         self.maxHealth = 100
         self.currentHealth = self.maxHealth
         self.sprite = "assets/tower.png"
+        self.damage = 45
         self.range = 1
         self.attackSpeed = 2
         self.price = 150
