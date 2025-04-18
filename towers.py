@@ -8,6 +8,7 @@ class Tower(ABC):
         self.damage = 50
         self.attackSpeed = 1
         self.range = 1
+        self.currentAttackTime = 0
 
     @abstractmethod
     def attack_enemy(self, enemy):

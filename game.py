@@ -18,6 +18,8 @@ clock = pygame.time.Clock()
 running = True
 
 
+
+
 game_board = board.Board(board_cols, board_rows, tile_size)
 menu = menu.Menu(screen, board_cols * tile_size, width, height, 500)
 
@@ -28,7 +30,7 @@ enemy_spawned_time = pygame.time.get_ticks()
 enemy_moved_time = pygame.time.get_ticks()
 
 while running:
-    fps = clock.tick(60)
+    fps = clock.tick(120)
     cur_time = pygame.time.get_ticks()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -67,11 +69,12 @@ while running:
                 enemies_spawned += 1
  
         if cur_time - enemy_moved_time >= 2500:
-            game_board.move_enemies()
+            menu.update_health(game_board.move_enemies())
             enemy_moved_time = cur_time
 
         game_board.tower_attack()
         menu.update_currency(game_board.death())
+
 
 
     menu.draw()

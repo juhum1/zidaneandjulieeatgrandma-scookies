@@ -9,6 +9,7 @@ class Board:
         self.cols = cols
         self.tile_size = tile_size
         self.array = [[tile.Tile(tile_size, tile_size) for _ in range(cols)] for _ in range(rows)]
+        self.player_health = 1000
 
     def __str__(self):
         board_str = ""
@@ -21,20 +22,27 @@ class Board:
             self.array[0][col].item = enemy
 
     def move_enemies(self):
-        for i in range(self.rows-2, -1, -1):
+        damage = 0
+        for i in range(self.rows - 1, -1, -1):
             for j in range(self.cols):
                 enemy = self.array[i][j].item
                 if enemy is not None and isinstance(enemy, enemies.Enemy):
                     if enemy.currentHealth <= 0:
-                        self.array[i][j].item = None  # Remove dead enemy
+                        self.array[i][j].item = None
                     else:
                         next_row = i + 1
-                        if next_row < self.rows and self.array[next_row][j].item is None:  
-                            self.array[next_row][j].item = enemy  
-                            self.array[i][j].item = None 
-                        elif isinstance(self.array[next_row][j].item, towers.Tower):  
-                            # enemy doesn't move, attacks tower
+                        if next_row >= self.rows:
+                            print("Enemy reached end!")
+                            self.array[i][j].item = None
+                            damage += enemy.damage
+                        elif self.array[next_row][j].item is None:
+                            self.array[next_row][j].item = enemy
+                            self.array[i][j].item = None
+                        elif isinstance(self.array[next_row][j].item, towers.Tower):
                             enemy.attack_tower(self.array[next_row][j].item)
+                        elif isinstance(self.array[next_row][j].item, enemies.Enemy):
+                            pass  
+        return damage       
 
     def tower_attack(self):
         for i in range(self.rows):
@@ -48,7 +56,7 @@ class Board:
                         for k in range(i-1, max(i - tower.range - 1, -1), -1):
                             enemy_tile = self.array[k][j]
                             enemy = enemy_tile.item
-                            if enemy is not None and isinstance(enemy, enemies.Enemy):
+                            if enemy is not None and isinstance(enemy, enemies.Enemy) and tower.currentAttackTime <= 0:
                                 if enemy.currentHealth > 0:
                                     print("tower_attack")
                                     tower.attack_enemy(enemy)

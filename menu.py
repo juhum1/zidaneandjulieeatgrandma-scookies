@@ -15,6 +15,7 @@ class Menu:
             
         ]
         self.selected_tower = None
+        self.health = 1000  
 
     def draw(self):
         pygame.draw.rect(self.screen, (100, 100, 100), (self.x_offset, 0, self.width, self.height))  # change to tiles later
@@ -29,7 +30,11 @@ class Menu:
         # Draw the currency
         font = pygame.font.Font(None, 36)
         currency_text = font.render(f"Currency: ${self.currency}", True, (255, 255, 255))
-        self.screen.blit(currency_text, (self.x_offset + 100, y_pos + 600))
+        self.screen.blit(currency_text, (self.x_offset + 100, y_pos + 500))
+        # Draw the health
+        health_text = font.render(f"Health: {self.health}", True, (255, 255, 255))
+        self.screen.blit(health_text, (self.x_offset + 100, y_pos + 600))
+
 
     def buy_tower(self, x_pos, y_pos):
         if x_pos < self.x_offset:  
@@ -65,6 +70,12 @@ class Menu:
     
     def update_currency(self, currency):
         self.currency += currency
+    def update_health(self, health):
+        self.health -= health
+        if self.health <= 0:
+            print("Game Over!")
+            return False
+        return True
 
     if __name__ == "__main__":
         print("This is a menu module. It should not be run directly.")
