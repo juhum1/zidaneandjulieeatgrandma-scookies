@@ -56,7 +56,7 @@ while running:
                 screen.blit(tile_obj.image, (j * tile_size, i * tile_size))
                 pygame.draw.rect(screen, (0, 0, 0), (j * game_board.tile_size, i * game_board.tile_size, game_board.tile_size, game_board.tile_size), 1)
                 if isinstance(tile_obj.item, towers.Tower):   # drawing towers 
-                    screen.blit(pygame.image.load(tile_obj.item.sprite), (j * tile_size, i * tile_size))
+                    screen.blit(tile_obj.item.sprite_surface, (j * tile_size, i * tile_size))
                 if isinstance(tile_obj.item, enemies.Enemy):    #drawing enemies
                     screen.blit(pygame.image.load(tile_obj.item.sprite), (j * tile_size, i * tile_size))
  
