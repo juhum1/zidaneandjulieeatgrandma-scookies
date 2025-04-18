@@ -8,16 +8,23 @@ class Tower(ABC):
         self.damage = 50
         self.attackSpeed = 1
         self.range = 1
-        self.currentAttackTime = 0
+        self.lastAttackTime = 0  
 
-    @abstractmethod
+    def can_attack(self):
+        now = pygame.time.get_ticks()
+        return (now - self.lastAttackTime) >= self.attackSpeed * 1000 # 1000 bc pygame time is in ms, essentially checking if enough time has passed since last attack
+
     def attack_enemy(self, enemy):
-        enemy.currentHealth -= self.damage
+        if self.can_attack():
+            if enemy.currentHealth > 0:
+                enemy.currentHealth -= self.damage
+                self.lastAttackTime = pygame.time.get_ticks()
 
 
 class Classic(Tower):
     def __init__(self):
         self.maxHealth = 150
+        self.lastAttackTime = 0 
         self.currentHealth = self.maxHealth 
         self.sprite = "assets/classic.png"
         self.damage = 50
@@ -36,14 +43,12 @@ class Classic(Tower):
         centered.blit(scaled, (offset_x, offset_y))
         self.sprite_surface = centered
         
-    
-    def attack_enemy(self, enemy):
-        super().attack_enemy(enemy)
-        
+
 
 class Fast(Tower):
     def __init__(self):
         self.maxHealth = 100
+        self.lastAttackTime = 0 
         self.currentHealth = self.maxHealth
         self.sprite = "assets/tower.png"
         self.damage = 45
@@ -61,6 +66,3 @@ class Fast(Tower):
         offset_y = (80 - new_size[1]) // 2
         centered.blit(scaled, (offset_x, offset_y))
         self.sprite_surface = centered
-
-    def attack_enemy(self, enemy):
-        super().attack_enemy(enemy)

@@ -32,7 +32,7 @@ class Board:
                     else:
                         next_row = i + 1
                         if next_row >= self.rows:
-                            print("Enemy reached end!")
+                           # print("Enemy reached end!")
                             self.array[i][j].item = None
                             damage += enemy.damage
                         elif self.array[next_row][j].item is None:
@@ -56,9 +56,9 @@ class Board:
                         for k in range(i-1, max(i - tower.range - 1, -1), -1):
                             enemy_tile = self.array[k][j]
                             enemy = enemy_tile.item
-                            if enemy is not None and isinstance(enemy, enemies.Enemy) and tower.currentAttackTime <= 0:
+                            if enemy is not None and isinstance(enemy, enemies.Enemy):
                                 if enemy.currentHealth > 0:
-                                    print("tower_attack")
+                                    #print("tower_attack")
                                     tower.attack_enemy(enemy)
                                     break  # only attack one enemy
 

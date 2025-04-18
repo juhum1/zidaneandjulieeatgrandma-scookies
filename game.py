@@ -37,13 +37,19 @@ while running:
             running = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if menu.buy_tower(event.pos[0], event.pos[1]):  
-                print("Tower selected!")
-            else:
-                if menu.selected_tower:
-                    success = menu.place_tower(game_board, event.pos[0], event.pos[1])
-                    if success:
-                        print("Tower placed!")
+            # if menu.buy_tower(event.pos[0], event.pos[1]):  
+            #     # change coloring of the selected tower on menu, change to green
+            #     print("Tower selected")
+                
+
+            # else:
+            #     if menu.selected_tower:
+            #         success = menu.place_tower(game_board, event.pos[0], event.pos[1])
+            #         if success:
+            #             print("Tower placed")
+            menu.buy_tower(event.pos[0], event.pos[1])
+            menu.place_tower(game_board, event.pos[0], event.pos[1])
+                    
     
     if wave == 0:
         #separate screen with welcome to tower defense game and introduction

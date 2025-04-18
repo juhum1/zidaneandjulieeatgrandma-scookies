@@ -10,8 +10,8 @@ class Menu:
         self.height = height
         self.currency = currency
         self.tower_options = [
-            {"name": "Basic Tower", "price": towers.Classic().price, "image": pygame.image.load(towers.Classic().sprite)},
-            {"name": "Fast Tower", "price": towers.Fast().price, "image": pygame.image.load(towers.Fast().sprite)},
+            {"name": "Basic Tower", "price": towers.Classic().price, "image": pygame.image.load(towers.Classic().sprite), "selected": False},
+            {"name": "Fast Tower", "price": towers.Fast().price, "image": pygame.image.load(towers.Fast().sprite), "selected": False},
             
         ]
         self.selected_tower = None
@@ -26,6 +26,8 @@ class Menu:
             font = pygame.font.Font(None, 24)
             text = font.render(f"{tower['name']} - ${tower['price']}", True, (255, 255, 255))
             self.screen.blit(text, (self.x_offset + 80, y_pos + 20))
+            if tower["selected"]:
+                pygame.draw.rect(self.screen, (0, 255, 0), (self.x_offset + 20, y_pos, 80, 80), 3)
 
         # Draw the currency
         font = pygame.font.Font(None, 36)
@@ -43,6 +45,9 @@ class Menu:
             y = index * 120 + 20
             if y <= y_pos <= y + 80:  # Clicked on a tower
                 if self.currency >= tower["price"]:
+                    for t in self.tower_options:
+                        t["selected"] = False
+                    tower["selected"] = True
                     match tower["name"]:
                         case "Basic Tower":
                             self.selected_tower = towers.Classic()
@@ -65,6 +70,8 @@ class Menu:
             board.array[row][col].item = self.selected_tower
             self.currency -= self.selected_tower.price
             self.selected_tower = None
+            for t in self.tower_options:
+                t["selected"] = False
             return True
         return False
     
