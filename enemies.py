@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import board
 
 class Enemy(ABC):
     def __init__(self):
@@ -68,8 +69,8 @@ class Witch(Enemy):
         self.currency = 10
         self.sprite = "assets/witch.png"
 
-    #def die(self): #skeleton(s) spawn when witch dies
-    #    skeleton = Skeleton()
-    
+    def die(self, col): #skeleton(s) spawn when witch dies
+        board.add(enemy, Skeleton(), col)
+
     def take_damage(self, damage: int):
         super().take_damage(damage)

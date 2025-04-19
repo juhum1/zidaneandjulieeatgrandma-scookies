@@ -25,10 +25,13 @@ wave = 0
 enemies_spawned = 0
 enemy_spawned_time = pygame.time.get_ticks()
 enemy_moved_time = pygame.time.get_ticks()
+is_paused = False
+paused_start_time = 0
+paused_total_time = 0
 
 while running:
     fps = clock.tick(120)
-    cur_time = pygame.time.get_ticks()
+    cur_time = pygame.time.get_ticks() - paused_total_time
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -46,64 +49,79 @@ while running:
             #             print("Tower placed")
             menu.buy_tower(event.pos[0], event.pos[1])
             menu.place_tower(game_board, event.pos[0], event.pos[1])
-                    
+            if menu.click_menu_bar(event.pos[0], event.pos[1]):
+                is_paused = not is_paused
+                if is_paused:
+                    paused_start_time = pygame.time.get_ticks()
+                else:
+                    paused_time = pygame.time.get_ticks() - paused_start_time
+                    paused_total_time += paused_time
+                    enemy_spawned_time -= paused_time
+                    enemy_moved_time -= paused_time
+            # need to fix so works for all waves
+            if menu.click_restart_button(game_board, event.pos[0], event.pos[1]) and is_paused:
+                cur_time = enemy_spawned_time = enemy_moved_time = pygame.time.get_ticks()
+                paused_start_time = paused_total_time = 0
+                enemies_spawned = 0
+                is_paused = False
+                menu.currency = 500
+                
+    if not is_paused:
+        if wave == 0:
+            #separate screen with welcome to tower defense game and introduction
+            wave += 1 
+            wave_1_begin_time = cur_time
+     
+
+        if wave == 1:
+            for i in range(game_board.rows):
+                for j in range(game_board.cols):
+                    tile_obj = game_board.array[i][j]  
+                    screen.blit(tile_obj.image, (j * tile_size, i * tile_size))
+                    pygame.draw.rect(screen, (0, 0, 0), (j * game_board.tile_size, i * game_board.tile_size, game_board.tile_size, game_board.tile_size), 1)
+                    if isinstance(tile_obj.item, towers.Tower):   # drawing towers 
+                        screen.blit(tile_obj.item.sprite_surface, (j * tile_size, i * tile_size))
+                    if isinstance(tile_obj.item, enemies.Enemy):    #drawing enemies
+                        screen.blit(pygame.image.load(tile_obj.item.sprite), (j * tile_size, i * tile_size))
+            
+            enemies_to_spawn = 10
+            spawn_rate = 2000
+            move_rate = 1000
+
+            if cur_time - enemy_spawned_time >= spawn_rate:
+                if (enemies_spawned < enemies_to_spawn):
+                    game_board.add_enemy(enemies.Goblin(), random.randint(0, 3))
+                    enemy_spawned_time = cur_time        
+                    enemies_spawned += 1
+     
+            if cur_time - enemy_moved_time >= move_rate:
+                wave_cleared = menu.update_health(game_board.move_enemies())
+                enemy_moved_time = cur_time
+
+            game_board.tower_attack()
+            menu.update_currency(game_board.death())
+            if game_board.wave_cleared(enemies_to_spawn, spawn_rate, cur_time - wave_1_begin_time):
+                wave += 1
+                game_board.clear_board()
+
+
+        if wave == 2:
+            for i in range(game_board.rows):
+                for j in range(game_board.cols):
+                    tile_obj = game_board.array[i][j]  
+                    screen.blit(tile_obj.image, (j * tile_size, i * tile_size))
+                    pygame.draw.rect(screen, (0, 0, 0), (j * game_board.tile_size, i * game_board.tile_size, game_board.tile_size, game_board.tile_size), 1)
+                    if isinstance(tile_obj.item, towers.Tower):   # drawing towers 
+                        screen.blit(tile_obj.item.sprite_surface, (j * tile_size, i * tile_size))
+                    if isinstance(tile_obj.item, enemies.Enemy):    #drawing enemies
+                        screen.blit(pygame.image.load(tile_obj.item.sprite), (j * tile_size, i * tile_size))
+
+
+        menu.draw()
     
-    if wave == 0:
-        #separate screen with welcome to tower defense game and introduction
-        wave += 1 
-        wave_1_begin_time = cur_time
- 
-
-    if wave == 1:
-        for i in range(game_board.rows):
-            for j in range(game_board.cols):
-                tile_obj = game_board.array[i][j]  
-                screen.blit(tile_obj.image, (j * tile_size, i * tile_size))
-                pygame.draw.rect(screen, (0, 0, 0), (j * game_board.tile_size, i * game_board.tile_size, game_board.tile_size, game_board.tile_size), 1)
-                if isinstance(tile_obj.item, towers.Tower):   # drawing towers 
-                    screen.blit(tile_obj.item.sprite_surface, (j * tile_size, i * tile_size))
-                if isinstance(tile_obj.item, enemies.Enemy):    #drawing enemies
-                    screen.blit(pygame.image.load(tile_obj.item.sprite), (j * tile_size, i * tile_size))
+       
         
-        enemies_to_spawn = 10
-        spawn_rate = 2000
-        move_rate = 1500
-
-        if cur_time - enemy_spawned_time >= spawn_rate:
-            if (enemies_spawned < enemies_to_spawn):
-                game_board.add_enemy(enemies.Goblin(), random.randint(0, 3))
-                enemy_spawned_time = cur_time        
-                enemies_spawned += 1
- 
-        if cur_time - enemy_moved_time >= move_rate:
-            wave_cleared = menu.update_health(game_board.move_enemies())
-            enemy_moved_time = cur_time
-
-        game_board.tower_attack()
-        menu.update_currency(game_board.death())
-        if game_board.wave_cleared(enemies_to_spawn, spawn_rate, cur_time - wave_1_begin_time):
-            wave += 1
-            game_board.clear_board()
-
-
-    if wave == 2:
-        for i in range(game_board.rows):
-            for j in range(game_board.cols):
-                tile_obj = game_board.array[i][j]  
-                screen.blit(tile_obj.image, (j * tile_size, i * tile_size))
-                pygame.draw.rect(screen, (0, 0, 0), (j * game_board.tile_size, i * game_board.tile_size, game_board.tile_size, game_board.tile_size), 1)
-                if isinstance(tile_obj.item, towers.Tower):   # drawing towers 
-                    screen.blit(tile_obj.item.sprite_surface, (j * tile_size, i * tile_size))
-                if isinstance(tile_obj.item, enemies.Enemy):    #drawing enemies
-                    screen.blit(pygame.image.load(tile_obj.item.sprite), (j * tile_size, i * tile_size))
- 
-
-
-        
-
-
-
-    menu.draw()
+            
     pygame.display.flip()
 
 
