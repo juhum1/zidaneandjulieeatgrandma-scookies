@@ -23,10 +23,9 @@ A terminal-based game where the player defends against multiple waves of incomin
 Towers have different stats, and as the game goes on enemies will spawn faster and faster.
 
 ## How will your project will use C/Python?
-We are going to try to incorporate the C library `ncurses` to implement terminal-based graphics. The bulk of the logic will come from collision detection and killing enemies with towers. The larger issue in this is the display, and implementing smooth displays of gameplay.
+We will use Python's Pygame library to create a GUI based game, using point and click features.
 
 ## How will your project will use C/Python structs/classes along with its features?
-We would use structs to define towers and enemies. We would have to dynamically allocate memory when adding new enemies and towers to the map, which should also be stored in one large struct. 
-
+There will be abstract base classes for the Enemies and Towers and we will design inherited classes to represent different enemies. We could also implement sprites to represent each entity. 
 ## What other other technologies/languages, if any, are you using as part of the project? (e.g. android studio, CSS/javascript for UIs, openGL for graphics, etc.)
-We could implement an external library (SLD2) to play music during the game. 
+Pygame has buiilt in music playing we can use
