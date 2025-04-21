@@ -50,7 +50,8 @@ class Board:
                             pass  
         return damage       
 
-    def wave_cleared(self, num_enemies, spawn_rate, time_passed):
+    # check if player lost too much health/let too many enemies pass through
+    def wave_over(self, num_enemies, spawn_rate, time_passed):
         if time_passed > num_enemies * spawn_rate: 
             for i in range(self.rows - 1, -1, -1):
                 for j in range(self.cols):

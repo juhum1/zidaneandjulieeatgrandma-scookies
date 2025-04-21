@@ -28,6 +28,7 @@ enemy_moved_time = pygame.time.get_ticks()
 is_paused = False
 paused_start_time = 0
 paused_total_time = 0
+remove = False
 
 while running:
     fps = clock.tick(120)
@@ -65,6 +66,15 @@ while running:
                 enemies_spawned = 0
                 is_paused = False
                 menu.currency = 500
+            
+            if menu.click_remove(event.pos[0], event.pos[1]):
+                remove = not remove
+            elif remove:
+                menu.update_currency(menu.remove_tower(game_board, event.pos[0], event.pos[1]))
+                remove = False
+            else:
+                pass
+
                 
     if not is_paused:
         if wave == 0:
@@ -86,21 +96,25 @@ while running:
             
             enemies_to_spawn = 10
             spawn_rate = 2000
-            move_rate = 1000
+            move_rate = 1500
+
+            if spawn_rate < move_rate:  # enemies may collide at spawn
+                running = False
+            
+            if cur_time - enemy_moved_time >= move_rate:
+                wave_cleared = menu.update_health(game_board.move_enemies())
+                enemy_moved_time = cur_time
 
             if cur_time - enemy_spawned_time >= spawn_rate:
                 if (enemies_spawned < enemies_to_spawn):
                     game_board.add_enemy(enemies.Goblin(), random.randint(0, 3))
                     enemy_spawned_time = cur_time        
                     enemies_spawned += 1
-     
-            if cur_time - enemy_moved_time >= move_rate:
-                wave_cleared = menu.update_health(game_board.move_enemies())
-                enemy_moved_time = cur_time
-
+                    enemy_moved_time = cur_time
+            
             game_board.tower_attack()
             menu.update_currency(game_board.death())
-            if game_board.wave_cleared(enemies_to_spawn, spawn_rate, cur_time - wave_1_begin_time):
+            if game_board.wave_over(enemies_to_spawn, spawn_rate, cur_time - wave_1_begin_time):
                 wave += 1
                 game_board.clear_board()
 

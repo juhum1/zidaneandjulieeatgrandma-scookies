@@ -21,11 +21,12 @@ class Menu:
     def draw(self):
         pygame.draw.rect(self.screen, (100, 100, 100), (self.x_offset, 0, self.width, self.height))  # change to tiles later
         
-        # Menu bar
-        pygame.draw.rect(self.screen, (200, 200, 200), (self.width - 100, 10, 90, 40))
+        # Draw Menu button
+        pygame.draw.rect(self.screen, (200, 200, 200), (self.width - 100, 10, 90, 35))
         font = pygame.font.Font(None, 44)
         self.screen.blit(font.render(("Menu"), True, (255, 255, 255)), (self.width - 96, 14))
 
+        # Draw towers 
         for index, tower in enumerate(self.tower_options):
             y_pos = index // 2 * 160 + 45
             self.screen.blit(tower["image"], (self.x_offset + 20 + (index % 2) * 180, y_pos + 10))  
@@ -34,6 +35,9 @@ class Menu:
             self.screen.blit(text, (self.x_offset + 40 + (index % 2) * 180, y_pos + 20))
             if tower["selected"]:
                 pygame.draw.rect(self.screen, (0, 200, 255), (self.x_offset + 20 + (index % 2) * 180, y_pos, 180, 160), 3)
+        
+        # Insert Remove tool
+        self.screen.blit(pygame.image.load("assets/bomb.png"), (self.x_offset + 350, y_pos + 425))
 
         # Draw the currency
         font = pygame.font.Font(None, 36)
@@ -44,14 +48,13 @@ class Menu:
         self.screen.blit(health_text, (self.x_offset + 100, y_pos + 550))
 
     def click_menu_bar(self, x_pos, y_pos):
-        if self.width - 100 <= x_pos <= self.width - 10 and 10 <= y_pos <= 50:
+        if self.width - 100 <= x_pos <= self.width - 10 and 10 <= y_pos <= 45:
             pygame.draw.rect(self.screen, (255, 255, 255), (self.width/2 - 100, self.height/2 - 30, 200, 60)) 
             self.screen.blit(pygame.image.load("assets/restart.png"), (self.width/2-27, self.height/2-28))
             return True
         return False
             
     def click_restart_button(self, board, x_pos, y_pos):   # restarts wave
-        pygame.draw.rect(self.screen, (0, 0, 0), (self.width/2 - 30, self.height/2 - 30, 64, 64), 3)
         if self.width/2 - 30 <= x_pos <= self.width/2 + 94 and self.height/2 - 30 <= y_pos <= self.height/2 + 94:
             board.clear_board()
             return True
@@ -96,7 +99,32 @@ class Menu:
                 t["selected"] = False
             return True
         return False
-    
+
+        pygame.draw.rect(self.screen, (255, 255, 255), (self.x_offset + 350, 625, 114, 114), 3)
+    # self.screen.blit(pygame.image.load("assets/bomb.png"), (self.x_offset + 350, y_pos + 425))
+    def click_remove(self, x_pos, y_pos):
+        if self.x_offset + 350 <= x_pos <= self.x_offset + 407 and 625 <= y_pos <= 682:
+            return True
+        return False
+
+    def remove_tower(self, board, x_pos, y_pos):
+        col = x_pos // board.tile_size
+        row = y_pos // board.tile_size
+        if 0 <= col < board.cols and 0 <= row < board.rows and isinstance(board.array[row][col].item, towers.Tower):
+            # bug: return_currency returns +1 value
+            return_percent = 50 
+            match tower := board.array[row][col].item:
+                case towers.Classic():
+                    return_currency = (tower.price * return_percent) // 100 - 1
+                case towers.Fast():
+                    return_currency = (tower.price * return_percent) // 100 - 1
+                case towers.Heavy():
+                    return_currency = (tower.price * return_percent) // 100 - 1
+            board.array[row][col].item = None
+            self.update_currency(return_currency)
+            return True
+        return False
+
     def update_currency(self, currency):
         self.currency += currency
 
