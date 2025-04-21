@@ -116,7 +116,7 @@ while running:
             menu.update_currency(game_board.death())
             if game_board.wave_over(enemies_to_spawn, spawn_rate, cur_time - wave_1_begin_time):
                 wave += 1
-                game_board.clear_board()
+                #game_board.clear_board()
 
 
         if wave == 2:
