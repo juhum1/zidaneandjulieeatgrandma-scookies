@@ -39,7 +39,7 @@ class Classic(Tower):
         self.maxHealth = 150
         self.lastAttackTime = 0 
         self.currentHealth = self.maxHealth 
-        self.sprite = "assets/classic.png"
+        self.sprite = "assets/wizard_back.png"
         self.damage = 50
         self.range = 3
         self.attackSpeed = 1

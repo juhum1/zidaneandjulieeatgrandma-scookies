@@ -25,6 +25,7 @@ class Board:
     def add_enemy(self, enemy, col):
         if col < self.cols and self.array[0][col].item is None:
             self.array[0][col].item = enemy
+            #enemy.set_position(0, col, self.tile_size)
 
     def move_enemies(self):
         damage = 0
@@ -44,6 +45,7 @@ class Board:
                         elif self.array[next_row][j].item is None:
                             self.array[next_row][j].item = enemy
                             self.array[i][j].item = None
+
                         elif isinstance(self.array[next_row][j].item, towers.Tower):
                             enemy.attack_tower(self.array[next_row][j].item)
                         elif isinstance(self.array[next_row][j].item, enemies.Enemy):

@@ -10,7 +10,7 @@ class Menu:
         self.height = height
         self.currency = currency
         self.tower_options = [
-            {"name": "Basic Tower", "price": towers.Classic().price, "image": pygame.image.load(towers.Classic().sprite), "selected": False},
+            {"name": "Basic Tower", "price": towers.Classic().price, "image": pygame.image.load("assets/wizard.png"), "selected": False},
             {"name": "Fast Tower", "price": towers.Fast().price, "image": pygame.image.load(towers.Fast().sprite), "selected": False},
             {"name": "Heavy Tower", "price": towers.Heavy().price, "image": pygame.image.load(towers.Heavy().sprite), "selected": False},
 
@@ -115,7 +115,7 @@ class Menu:
         return False
 
         pygame.draw.rect(self.screen, (255, 255, 255), (self.x_offset + 350, 625, 114, 114), 3)
-    # self.screen.blit(pygame.image.load("assets/bomb.png"), (self.x_offset + 350, y_pos + 425))
+
     def click_remove(self, x_pos, y_pos):
         if self.x_offset + 350 <= x_pos <= self.x_offset + 407 and 625 <= y_pos <= 682:
             self.remove_clicked = not self.remove_clicked
