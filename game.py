@@ -94,8 +94,9 @@ while running:
             
             if menu.click_remove(event.pos[0], event.pos[1]):
                 remove = not remove
+
             elif remove:
-                menu.update_currency(menu.remove_tower(game_board, event.pos[0], event.pos[1]))
+                menu.remove_tower(game_board, event.pos[0], event.pos[1])
                 remove = False
             else:
                 pass

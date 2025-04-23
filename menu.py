@@ -18,6 +18,7 @@ class Menu:
         self.selected_tower = None
         self.health = 500  
         self.wave = 0
+        self.remove_clicked = False
 
     def draw(self):
         pygame.draw.rect(self.screen, (100, 100, 100), (self.x_offset, 0, self.width, self.height))  # change to tiles later
@@ -37,6 +38,8 @@ class Menu:
                 pygame.draw.rect(self.screen, (0, 200, 255), (self.x_offset + 20 + (index % 2) * 180, y_pos, 180, 160), 3)
         
         self.screen.blit(pygame.image.load("assets/bomb.png"), (self.x_offset + 350, y_pos + 425))
+        if self.remove_clicked:
+            pygame.draw.rect(self.screen, (255, 0, 0), (self.x_offset + 350, y_pos + 425, 60, 60), 4)
 
         font = pygame.font.Font(None, 36)
         currency_text = font.render(f"Currency: ${self.currency}", True, (255, 255, 255))
@@ -54,6 +57,7 @@ class Menu:
         if self.width - 100 <= x_pos <= self.width - 10 and 10 <= y_pos <= 45:
             pygame.draw.rect(self.screen, (255, 255, 255), (self.width/2 - 100, self.height/2 - 30, 200, 60)) 
             self.screen.blit(pygame.image.load("assets/restart.png"), (self.width/2-27, self.height/2-28))
+            self.remove_clicked = False
             return True
         return False
             
@@ -61,6 +65,7 @@ class Menu:
         if self.width/2 - 30 <= x_pos <= self.width/2 + 94 and self.height/2 - 30 <= y_pos <= self.height/2 + 94:
             board.clear_board()
             self.health = 500
+            self.remove_clicked = False
             return True
         return False
 
@@ -72,6 +77,7 @@ class Menu:
             y = index // 2 * 160 + 85
             x = self.x_offset + 60 + (index % 2) * 180
             if y - 40 <= y_pos <= y + 120 and x - 60 <= x_pos <= x + 140:  # Clicked on a tower
+                self.remove_clicked = False
                 if self.currency >= tower["price"]:
                     for t in self.tower_options:
                         t["selected"] = False
@@ -105,12 +111,14 @@ class Menu:
             for t in self.tower_options:
                 t["selected"] = False
             return True
+            self.remove_clicked = False
         return False
 
         pygame.draw.rect(self.screen, (255, 255, 255), (self.x_offset + 350, 625, 114, 114), 3)
     # self.screen.blit(pygame.image.load("assets/bomb.png"), (self.x_offset + 350, y_pos + 425))
     def click_remove(self, x_pos, y_pos):
         if self.x_offset + 350 <= x_pos <= self.x_offset + 407 and 625 <= y_pos <= 682:
+            self.remove_clicked = not self.remove_clicked
             return True
         return False
 
@@ -122,13 +130,14 @@ class Menu:
             return_percent = 50 
             match tower := board.array[row][col].item:
                 case towers.Classic():
-                    return_currency = (tower.price * return_percent) // 100 - 1
+                    return_currency = (tower.price * return_percent) // 100 
                 case towers.Fast():
-                    return_currency = (tower.price * return_percent) // 100 - 1
+                    return_currency = (tower.price * return_percent) // 100
                 case towers.Heavy():
-                    return_currency = (tower.price * return_percent) // 100 - 1
+                    return_currency = (tower.price * return_percent) // 100
             board.array[row][col].item = None
             self.update_currency(return_currency)
+            self.remove_clicked = False
             return True
         return False
 
