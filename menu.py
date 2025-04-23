@@ -60,7 +60,6 @@ class Menu:
     def click_restart_button(self, board, x_pos, y_pos):   # restarts wave
         if self.width/2 - 30 <= x_pos <= self.width/2 + 94 and self.height/2 - 30 <= y_pos <= self.height/2 + 94:
             board.clear_board()
-            self.wave = 0
             self.health = 500
             return True
         return False

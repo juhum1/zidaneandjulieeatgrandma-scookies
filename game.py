@@ -89,6 +89,8 @@ while running:
                 enemies_spawned = 0
                 is_paused = False
                 menu.currency = 500
+                menu.health = 500
+                wave = 0
             
             if menu.click_remove(event.pos[0], event.pos[1]):
                 remove = not remove
