@@ -9,7 +9,7 @@ class Board:
         self.cols = cols
         self.tile_size = tile_size
         self.array = [[tile.Tile(tile_size, tile_size) for _ in range(cols)] for _ in range(rows)]
-        self.player_health = 1000
+        self.player_health = 500
 
     def __str__(self):
         board_str = ""

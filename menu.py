@@ -16,7 +16,8 @@ class Menu:
 
         ]
         self.selected_tower = None
-        self.health = 1000  
+        self.health = 500  
+        self.wave = 0
 
     def draw(self):
         pygame.draw.rect(self.screen, (100, 100, 100), (self.x_offset, 0, self.width, self.height))  # change to tiles later
@@ -26,7 +27,6 @@ class Menu:
         font = pygame.font.Font(None, 44)
         self.screen.blit(font.render(("Menu"), True, (255, 255, 255)), (self.width - 96, 14))
 
-        # Draw towers 
         for index, tower in enumerate(self.tower_options):
             y_pos = index // 2 * 160 + 45
             self.screen.blit(tower["image"], (self.x_offset + 20 + (index % 2) * 180, y_pos + 10))  
@@ -36,16 +36,19 @@ class Menu:
             if tower["selected"]:
                 pygame.draw.rect(self.screen, (0, 200, 255), (self.x_offset + 20 + (index % 2) * 180, y_pos, 180, 160), 3)
         
-        # Insert Remove tool
         self.screen.blit(pygame.image.load("assets/bomb.png"), (self.x_offset + 350, y_pos + 425))
 
-        # Draw the currency
         font = pygame.font.Font(None, 36)
         currency_text = font.render(f"Currency: ${self.currency}", True, (255, 255, 255))
         self.screen.blit(currency_text, (self.x_offset + 100, y_pos + 450))
-        # Draw the health
-        health_text = font.render(f"Health: {self.health}", True, (255, 255, 255))
-        self.screen.blit(health_text, (self.x_offset + 100, y_pos + 550))
+        pygame.draw.rect(self.screen, (255, 0, 0), (self.x_offset + 100, y_pos + 490, 200, 20))
+        pygame.draw.rect(self.screen, (0, 255, 0), (self.x_offset + 100, y_pos + 490, 200 * (self.health / 500), 20))
+        font = pygame.font.Font(None, 24)
+
+        # draw wave
+        wave_text = font.render(f"Wave: {self.wave}", True, (255, 255, 255))
+        self.screen.blit(wave_text, (self.x_offset + 100, y_pos + 520))
+        
 
     def click_menu_bar(self, x_pos, y_pos):
         if self.width - 100 <= x_pos <= self.width - 10 and 10 <= y_pos <= 45:
@@ -57,8 +60,13 @@ class Menu:
     def click_restart_button(self, board, x_pos, y_pos):   # restarts wave
         if self.width/2 - 30 <= x_pos <= self.width/2 + 94 and self.height/2 - 30 <= y_pos <= self.height/2 + 94:
             board.clear_board()
+            self.wave = 0
+            self.health = 500
             return True
         return False
+
+    def set_wave(self, wave):
+        self.wave = wave
 
     def buy_tower(self, x_pos, y_pos):
         for index, tower in enumerate(self.tower_options):
