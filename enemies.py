@@ -3,8 +3,8 @@ import board
 
 class Enemy(ABC):
     def __init__(self):
+        self.maxHealth = 1
         self.currentHealth = self.maxHealth
-        self.maxHealth = None
         self.damage = 50
         self.speed = 1
         self.attackSpeed = 1
@@ -21,9 +21,9 @@ class Enemy(ABC):
         pass
 
     def take_damage(self, damage: int):
-        self.health -= damage
-        if self.health <= 0:
-            self.die()
+        self.currentHealth -= damage
+        # if self.health <= 0:
+        #     self.die()
 
 
 class Goblin(Enemy):
@@ -69,5 +69,8 @@ class Witch(Enemy):
         self.col = pos[1]
 
     def die(self, board):
-        board.add_enemy(Skeleton(), self.row, self.col)
+        print(f"Witch at ({self.row}, {self.col}) died!")
 
+        board.array[self.row][self.col].item = None
+        #board.add_enemy(Skeleton(), self.row, self.col)
+        return Skeleton()

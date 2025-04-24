@@ -30,7 +30,7 @@ paused_start_time = 0
 paused_total_time = 0
 remove = False
 
-enemies_arr = [enemies.Goblin, enemies.Skeleton, enemies.Witch]
+enemies_arr = [enemies.Witch, enemies.Witch, enemies.Witch]
 
 def handle_wave(wave_num, game_board, screen, menu, cur_time, tile_size, enemy_spawned_time, enemy_moved_time, enemies_spawned, wave_begin_time):
     enemies_to_spawn = 10 + 5 * (wave_num - 1)
@@ -53,11 +53,11 @@ def handle_wave(wave_num, game_board, screen, menu, cur_time, tile_size, enemy_s
 
     if cur_time - enemy_spawned_time >= spawn_rate:
         if enemies_spawned < enemies_to_spawn:
-            game_board.add_enemy(enemies.Goblin(), 0, random.randint(0, game_board.cols - 1))
-            #   if (wave_num // 2 + 1 <= len(enemies_arr) - 1):
-            #   game_board.add_enemy(enemies_arr[random.randint(0, wave_num // 2 + 1)](), 0, random.randint(0, game_board.cols - 1))
-            #   else:
-            #    game_board.add_enemy(enemies_arr[random.randint(0, len(enemies_arr) - 1)], 0, random.randint(0, game_board.cols - 1))
+            #game_board.add_enemy(enemies.Goblin(), 0, random.randint(0, game_board.cols - 1))
+            if (wave_num // 2 + 1 <= len(enemies_arr) - 1):
+              game_board.add_enemy(enemies_arr[random.randint(0, wave_num // 2 + 1)](), 0, random.randint(0, game_board.cols - 1))
+            else:
+               game_board.add_enemy(enemies_arr[random.randint(0, len(enemies_arr) - 1)](), 0, random.randint(0, game_board.cols - 1))
             enemy_spawned_time = cur_time
             enemies_spawned += 1
             enemy_moved_time = cur_time

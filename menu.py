@@ -85,18 +85,19 @@ class Menu:
                     match tower["name"]:
                         case "Basic Tower":
                             self.selected_tower = towers.Classic()
-                            print(f"Selected {tower['name']}")
+                           # print(f"Selected {tower['name']}")
                         case "Fast Tower":
                             self.selected_tower = towers.Fast()
-                            print(f"Selected {tower['name']}")
+                            #print(f"Selected {tower['name']}")
                         case "Heavy Tower":
                             self.selected_tower = towers.Heavy()
-                            print(f"Selected {tower['name']}")
+                            #print(f"Selected {tower['name']}")
 
 
                     return tower
-                else:
-                    print("Not enough currency!")
+                #else:
+                    #pass
+                    #print("Not enough currency!")
         return None
 
     def place_tower(self, board, x_pos, y_pos):

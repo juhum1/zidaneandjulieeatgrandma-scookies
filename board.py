@@ -33,24 +33,24 @@ class Board:
             for j in range(self.cols):
                 enemy = self.array[i][j].item
                 if enemy is not None and isinstance(enemy, enemies.Enemy):
-                    if enemy.currentHealth <= 0:
+                    # if enemy.currentHealth <= 0:
+                    #     self.array[i][j].item = None
+                    #     enemy.die(board)
+                    # else:
+                    next_row = i + 1
+                    if next_row >= self.rows:
+                        # print("Enemy reached end!")
                         self.array[i][j].item = None
-                        enemy.die(board)
-                    else:
-                        next_row = i + 1
-                        if next_row >= self.rows:
-                           # print("Enemy reached end!")
-                            self.array[i][j].item = None
-                            damage += enemy.damage
-                        elif self.array[next_row][j].item is None:
-                            self.array[next_row][j].item = enemy
-                            self.array[i][j].item = None
-                            enemy.row = i
-                            enemy.col = j
-                        elif isinstance(self.array[next_row + enemy.attackRange - 1][j].item, towers.Tower):
-                            enemy.attack_tower(self.array[next_row + enemy.attackRange - 1][j].item)
-                        elif isinstance(self.array[next_row][j].item, enemies.Enemy):
-                            pass  
+                        damage += enemy.damage
+                    elif self.array[next_row][j].item is None:
+                        self.array[next_row][j].item = enemy
+                        self.array[i][j].item = None
+                        enemy.row = i
+                        enemy.col = j
+                    elif isinstance(self.array[next_row + enemy.attackRange - 1][j].item, towers.Tower):
+                        enemy.attack_tower(self.array[next_row + enemy.attackRange - 1][j].item)
+                    elif isinstance(self.array[next_row][j].item, enemies.Enemy):
+                        pass  
         return damage       
 
     def wave_over(self, num_enemies, spawn_rate, time_passed):
@@ -87,6 +87,10 @@ class Board:
                     if isinstance(self.array[i][j].item, enemies.Enemy):
                         if self.array[i][j].item.currentHealth <= 0:
                             currency += self.array[i][j].item.currency
-                            self.array[i][j].item = None
+                            if isinstance(self.array[i][j].item, enemies.Witch):
+                                self.array[i][j].item = self.array[i][j].item.die(self)
+    
+                            else:
+                                self.array[i][j].item = None
         return currency 
 
