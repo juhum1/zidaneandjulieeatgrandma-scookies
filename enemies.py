@@ -11,6 +11,8 @@ class Enemy(ABC):
         self.attackRange = 1
         self.currency = 10
         self.sprite = None
+        self.row = 0
+        self.col = 0
 
     def attack_tower(self, tower):
         tower.currentHealth -= self.damage
@@ -33,7 +35,7 @@ class Goblin(Enemy):
         self.attackSpeed = 1
         self.attackRange = 1
         self.currency = 10
-        self.sprite = "assets/goblin.png"
+        self.sprite = "assets/goblin1.png"
 
 
 
@@ -59,7 +61,13 @@ class Witch(Enemy):
         self.attackRange = 3
         self.currency = 10
         self.sprite = "assets/witch.png"
+        self.row = 0
+        self.col = 0
 
-    def die(self, col): #skeleton(s) spawn when witch dies
-        board.add(enemy, Skeleton(), col)
+    def track_position(self, pos):
+        self.row = pos[0]
+        self.col = pos[1]
+
+    def die(self, board):
+        board.add_enemy(Skeleton(), self.row, self.col)
 

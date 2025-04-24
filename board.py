@@ -22,12 +22,12 @@ class Board:
             for j in range(self.cols):
                 self.array[i][j].item = None 
 
-    def add_enemy(self, enemy, col):
-        if col < self.cols and self.array[0][col].item is None:
-            self.array[0][col].item = enemy
+    def add_enemy(self, enemy, row, col):
+        if col < self.cols and self.array[row][col].item is None:
+            self.array[row][col].item = enemy
             #enemy.set_position(0, col, self.tile_size)
 
-    def move_enemies(self):
+    def move_enemies(self, board):
         damage = 0
         for i in range(self.rows - 1, -1, -1):
             for j in range(self.cols):
@@ -35,7 +35,7 @@ class Board:
                 if enemy is not None and isinstance(enemy, enemies.Enemy):
                     if enemy.currentHealth <= 0:
                         self.array[i][j].item = None
-                        enemy.die()
+                        enemy.die(board)
                     else:
                         next_row = i + 1
                         if next_row >= self.rows:
@@ -45,14 +45,14 @@ class Board:
                         elif self.array[next_row][j].item is None:
                             self.array[next_row][j].item = enemy
                             self.array[i][j].item = None
-
-                        elif isinstance(self.array[next_row][j].item, towers.Tower):
-                            enemy.attack_tower(self.array[next_row][j].item)
+                            enemy.row = i
+                            enemy.col = j
+                        elif isinstance(self.array[next_row + enemy.attackRange - 1][j].item, towers.Tower):
+                            enemy.attack_tower(self.array[next_row + enemy.attackRange - 1][j].item)
                         elif isinstance(self.array[next_row][j].item, enemies.Enemy):
                             pass  
         return damage       
 
-    # check if player lost too much health/let too many enemies pass through
     def wave_over(self, num_enemies, spawn_rate, time_passed):
         if time_passed > num_enemies * spawn_rate: 
             for i in range(self.rows - 1, -1, -1):
@@ -86,7 +86,7 @@ class Board:
                 if self.array[i][j].item is not None:
                     if isinstance(self.array[i][j].item, enemies.Enemy):
                         if self.array[i][j].item.currentHealth <= 0:
-                            currency += self.array[i][j].item.currency 
+                            currency += self.array[i][j].item.currency
                             self.array[i][j].item = None
         return currency 
 
