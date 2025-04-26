@@ -2,7 +2,7 @@ import tile
 import pygame
 import towers
 import enemies
-
+import projectile
 class Board:
     def __init__(self, cols, rows, tile_size):
         self.rows = rows
@@ -10,6 +10,7 @@ class Board:
         self.tile_size = tile_size
         self.array = [[tile.Tile(tile_size, tile_size) for _ in range(cols)] for _ in range(rows)]
         self.player_health = 500
+        self.projectiles = []
 
     def __str__(self):
         board_str = ""
@@ -74,7 +75,9 @@ class Board:
                             enemy = self.array[k][j].item
                             if enemy is not None and isinstance(enemy, enemies.Enemy):
                                 if enemy.currentHealth > 0:
-                                    tower.attack_enemy(enemy)
+                                    #tower.attack_enemy(enemy)
+                                    new_projectile = projectile.Projectile((i, j), enemy, tower.damage, range=tower.range)
+                                    self.projectiles.append(new_projectile)
                                     break  # only attack one enemy
 
 

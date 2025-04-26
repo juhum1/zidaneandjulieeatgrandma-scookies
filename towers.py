@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import pygame
-
+import projectile
 def scale_image(img):
         rect = img.get_bounding_rect()
         scale_imageped = img.subsurface(rect).copy()
@@ -29,6 +29,9 @@ class Tower(ABC):
 
     def attack_enemy(self, enemy):
         if self.can_attack():
+
+
+
             if enemy.currentHealth > 0:
                 enemy.currentHealth -= self.damage
                 self.lastAttackTime = pygame.time.get_ticks()

@@ -122,6 +122,11 @@ while running:
 
 
         menu.draw()
+        for proj in game_board.projectiles[:]:  
+            proj.move()
+            proj.draw(screen)
+            if proj.check_collision() or not proj.alive:
+                game_board.projectiles.remove(proj)
             
     pygame.display.flip()
 
