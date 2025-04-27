@@ -3,6 +3,7 @@ import pygame
 import towers
 import enemies
 import projectile
+
 class Board:
     def __init__(self, cols, rows, tile_size):
         self.rows = rows

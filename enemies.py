@@ -49,6 +49,8 @@ class Skeleton(Enemy):
         self.attackRange = 1
         self.currency = 5
         self.sprite = "assets/skeleton.png"
+        self.row = 0
+        self.col = 0
     
     
 class Witch(Enemy):

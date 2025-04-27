@@ -12,11 +12,11 @@ class Projectile:
         self.sprite = pygame.image.load(sprite_path).convert_alpha()
         self.alive = True
 
-        distance = target.y - self.y
+        distance = target.row - self.y
         if distance == 0:
             distance = 1  # Avoid division by zero
-        self.dir_x = dx / distance
-        self.dir_y = dy / distance
+        self.dir_x = speed / distance
+        self.dir_y = speed / distance
 
     def move(self):
         self.y += self.dir_y * self.speed
@@ -26,7 +26,7 @@ class Projectile:
 
     def check_collision(self):
         # Simple collision based on distance threshold
-        distance = self.target.y - self.y
+        distance = self.target.row - self.y
         if distance <= 0 or self.range >= self.y - self.start_y:  
             # attack enemy
             self.target.take_damage(self.damage)
