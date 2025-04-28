@@ -4,6 +4,7 @@ import board
 import towers
 import menu
 import random
+import start_screen
 
 pygame.init()
 board_cols = 4  
@@ -17,10 +18,11 @@ pygame.display.set_caption("Tower Defense")
 clock = pygame.time.Clock()
 running = True
 
-
+start_screen = start_screen.Start_Screen(screen, width, height)
 game_board = board.Board(board_cols, board_rows, tile_size)
 menu = menu.Menu(screen, board_cols * tile_size, width, height, 500)
 
+start_game = False
 wave = 0
 enemies_spawned = 0
 enemy_spawned_time = pygame.time.get_ticks()
@@ -76,8 +78,11 @@ while running:
             running = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
+            start_screen.click_start(event.pos[0], event.pos[1]) 
+
             menu.buy_tower(event.pos[0], event.pos[1])
             menu.place_tower(game_board, event.pos[0], event.pos[1])
+
             if menu.click_menu_bar(event.pos[0], event.pos[1]):
                 is_paused = not is_paused
                 if is_paused:
@@ -87,7 +92,7 @@ while running:
                     paused_total_time += paused_time
                     enemy_spawned_time -= paused_time
                     enemy_moved_time -= paused_time
-            # need to fix so works for all waves
+
             if menu.click_restart_button(game_board, event.pos[0], event.pos[1]) and is_paused:
                 cur_time = enemy_spawned_time = enemy_moved_time = pygame.time.get_ticks()
                 paused_start_time = paused_total_time = 0
@@ -99,19 +104,20 @@ while running:
             
             if menu.click_remove(event.pos[0], event.pos[1]):
                 remove = not remove
-
             elif remove:
                 menu.remove_tower(game_board, event.pos[0], event.pos[1])
                 remove = False
             else:
                 pass
+
                 
     if not is_paused:
         if wave == 0:
-            #separate screen with welcome to tower defense game and introduction
-            wave += 1 
-            menu.set_wave(wave)
-            wave_begin_time = cur_time
+            start_game = start_screen.draw(game_board, menu, tile_size)
+            if start_game:
+                    wave += 1 
+                    menu.set_wave(wave)
+                    wave_begin_time = cur_time
         else:
             wave_done, enemy_spawned_time, enemy_moved_time, enemies_spawned = handle_wave(wave, game_board, screen, menu, cur_time, tile_size, enemy_spawned_time, enemy_moved_time, enemies_spawned, wave_begin_time)
             if wave_done:
@@ -121,13 +127,13 @@ while running:
                 menu.set_wave(wave)
 
 
-        menu.draw()
-        for proj in game_board.projectiles[:]:  
-            proj.move()
-            proj.draw(screen)
-            if proj.check_collision() or not proj.alive:
-                game_board.projectiles.remove(proj)
-            
+            menu.draw()
+            for proj in game_board.projectiles[:]:  
+                proj.move()
+                proj.draw(screen)
+                if proj.check_collision() or not proj.alive:
+                    game_board.projectiles.remove(proj)
+                
     pygame.display.flip()
 
 
