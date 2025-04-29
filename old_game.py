@@ -6,8 +6,8 @@ import menu
 import random
 
 pygame.init()
-board_cols = 4
-board_rows = 10
+board_cols = 4  
+board_rows = 10  
 tile_size = 80
 width, height = board_cols * tile_size * 2, board_rows * tile_size
 width += 100
@@ -16,6 +16,7 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Tower Defense")
 clock = pygame.time.Clock()
 running = True
+
 
 game_board = board.Board(board_cols, board_rows, tile_size)
 menu = menu.Menu(screen, board_cols * tile_size, width, height, 500)
@@ -33,8 +34,8 @@ enemies_arr = [enemies.Witch, enemies.Witch, enemies.Witch]
 
 def handle_wave(wave_num, game_board, menu, cur_time, tile_size, enemy_spawned_time, enemy_moved_time, enemies_spawned, wave_begin_time):
     enemies_to_spawn = 10 + 5 * (wave_num - 1)
-    spawn_rate = max(500, 2000 - 100 * (wave_num - 1))
-    move_rate = max(400, 1500 - 100 * (wave_num - 1))
+    spawn_rate = max(500, 2000 - 100 * (wave_num - 1))  
+    move_rate = max(400, 1500 - 100 * (wave_num - 1))   
 
     if cur_time - enemy_moved_time >= move_rate:
         wave_cleared = menu.update_health(game_board.move_enemies(game_board))
@@ -64,10 +65,10 @@ def handle_wave(wave_num, game_board, menu, cur_time, tile_size, enemy_spawned_t
     wave_done = game_board.wave_over(enemies_to_spawn, spawn_rate, cur_time - wave_begin_time)
     return wave_done, enemy_spawned_time, enemy_moved_time, enemies_spawned
 
+    
 while running:
     fps = clock.tick(120)
     cur_time = pygame.time.get_ticks() - paused_total_time
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -75,7 +76,6 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             menu.buy_tower(event.pos[0], event.pos[1])
             menu.place_tower(game_board, event.pos[0], event.pos[1])
-
             if menu.click_menu_bar(event.pos[0], event.pos[1]):
                 is_paused = not is_paused
                 if is_paused:
@@ -85,7 +85,7 @@ while running:
                     paused_total_time += paused_time
                     enemy_spawned_time -= paused_time
                     enemy_moved_time -= paused_time
-
+            # need to fix so works for all waves
             if menu.click_restart_button(game_board, event.pos[0], event.pos[1]) and is_paused:
                 cur_time = enemy_spawned_time = enemy_moved_time = pygame.time.get_ticks()
                 paused_start_time = paused_total_time = 0
@@ -94,56 +94,43 @@ while running:
                 menu.currency = 500
                 menu.health = 500
                 wave = 0
-
+            
             if menu.click_remove(event.pos[0], event.pos[1]):
                 remove = not remove
+
             elif remove:
                 menu.remove_tower(game_board, event.pos[0], event.pos[1])
                 remove = False
-
+            else:
+                pass
+                
+    
     if not is_paused:
-        # 1. Draw background tiles and grid
-        for i in range(game_board.rows):
-            for j in range(game_board.cols):
-                tile_obj = game_board.array[i][j]
-                screen.blit(tile_obj.image, (j * tile_size, i * tile_size))
-                pygame.draw.rect(screen, (0, 0, 0), (j * tile_size, i * tile_size, tile_size, tile_size), 1)
-
-        # 2. Update wave logic
         if wave == 0:
-            wave += 1
+            #separate screen with welcome to tower defense game and introduction
+            wave += 1 
             menu.set_wave(wave)
             wave_begin_time = cur_time
         else:
-            wave_done, enemy_spawned_time, enemy_moved_time, enemies_spawned = handle_wave(
-                wave, game_board, menu, cur_time, tile_size,
-                enemy_spawned_time, enemy_moved_time, enemies_spawned, wave_begin_time
-            )
+            wave_done, enemy_spawned_time, enemy_moved_time, enemies_spawned = handle_wave(wave, game_board, screen, menu, cur_time, tile_size, enemy_spawned_time, enemy_moved_time, enemies_spawned, wave_begin_time)
+            for proj in game_board.projectiles[:]:  
+                proj.draw(screen)
+                proj.move()
+                if proj.check_collision() or not proj.alive:
+                    game_board.projectiles.remove(proj)
+
+                
             if wave_done:
                 wave += 1
                 enemies_spawned = 0
                 wave_begin_time = pygame.time.get_ticks()
                 menu.set_wave(wave)
 
-        # 3. Move and draw projectiles
-        for proj in game_board.projectiles[:]:
-            proj.move()
-            proj.draw(screen)
-            if proj.check_collision() or not proj.alive:
-                game_board.projectiles.remove(proj)
 
-        # 4. Draw enemies and towers
-        for i in range(game_board.rows):
-            for j in range(game_board.cols):
-                item = game_board.array[i][j].item
-                if isinstance(item, towers.Tower):
-                    screen.blit(item.sprite_surface, (j * tile_size, i * tile_size))
-                elif isinstance(item, enemies.Enemy):
-                    screen.blit(pygame.image.load(item.sprite), (j * tile_size, i * tile_size))
-
-        # 5. Draw UI
         menu.draw()
-
+        
+            
     pygame.display.flip()
+
 
 pygame.quit()

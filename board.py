@@ -76,7 +76,8 @@ class Board:
                             if enemy is not None and isinstance(enemy, enemies.Enemy):
                                 if enemy.currentHealth > 0:
                                     #tower.attack_enemy(enemy)
-                                    new_projectile = projectile.Projectile((i, j), enemy, tower.damage, range=tower.range)
+                                    new_projectile = projectile.Projectile(start_pos=(i*self.tile_size, j*self.tile_size), target=enemy, damage=tower.damage, range=tower.range, target_y=j*self.tile_size)
+
                                     self.projectiles.append(new_projectile)
                                     break  # only attack one enemy
 
@@ -94,6 +95,8 @@ class Board:
                                 self.array[i][j].item = self.array[i][j].item.die(self)
     
                             else:
+                                print(f"Enemy at ({i}, {j}) died!")
                                 self.array[i][j].item = None
+
         return currency 
 
