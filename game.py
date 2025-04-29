@@ -4,6 +4,7 @@ import board
 import towers
 import menu
 import random
+import start_screen
 
 pygame.init()
 board_cols = 4
@@ -17,9 +18,11 @@ pygame.display.set_caption("Tower Defense")
 clock = pygame.time.Clock()
 running = True
 
+start_screen = start_screen.Start_Screen(screen, width, height)
 game_board = board.Board(board_cols, board_rows, tile_size)
 menu = menu.Menu(screen, board_cols * tile_size, width, height, 500)
 
+start_game = False
 wave = 0
 enemies_spawned = 0
 enemy_spawned_time = pygame.time.get_ticks()
@@ -73,6 +76,8 @@ while running:
             running = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
+            start_screen.click_start(event.pos[0], event.pos[1]) 
+
             menu.buy_tower(event.pos[0], event.pos[1])
             menu.place_tower(game_board, event.pos[0], event.pos[1])
 
@@ -101,6 +106,7 @@ while running:
                 menu.remove_tower(game_board, event.pos[0], event.pos[1])
                 remove = False
 
+
     if not is_paused:
         # 1. Draw background tiles and grid
         for i in range(game_board.rows):
@@ -111,9 +117,11 @@ while running:
 
         # 2. Update wave logic
         if wave == 0:
-            wave += 1
-            menu.set_wave(wave)
-            wave_begin_time = cur_time
+            start_game = start_screen.draw(game_board, menu, tile_size)
+            if start_game:
+                    wave += 1 
+                    menu.set_wave(wave)
+                    wave_begin_time = cur_time
         else:
             wave_done, enemy_spawned_time, enemy_moved_time, enemies_spawned = handle_wave(
                 wave, game_board, menu, cur_time, tile_size,
@@ -125,25 +133,14 @@ while running:
                 wave_begin_time = pygame.time.get_ticks()
                 menu.set_wave(wave)
 
-        # 3. Move and draw projectiles
-        for proj in game_board.projectiles[:]:
-            proj.move()
-            proj.draw(screen)
-            if proj.check_collision() or not proj.alive:
-                game_board.projectiles.remove(proj)
 
-        # 4. Draw enemies and towers
-        for i in range(game_board.rows):
-            for j in range(game_board.cols):
-                item = game_board.array[i][j].item
-                if isinstance(item, towers.Tower):
-                    screen.blit(item.sprite_surface, (j * tile_size, i * tile_size))
-                elif isinstance(item, enemies.Enemy):
-                    screen.blit(pygame.image.load(item.sprite), (j * tile_size, i * tile_size))
-
-        # 5. Draw UI
-        menu.draw()
-
+            menu.draw()
+            for proj in game_board.projectiles[:]:  
+                proj.move()
+                proj.draw(screen)
+                if proj.check_collision() or not proj.alive:
+                    game_board.projectiles.remove(proj)
+                
     pygame.display.flip()
 
 pygame.quit()
