@@ -5,6 +5,7 @@ import towers
 import menu
 import random
 import start_screen
+import projectile
 
 pygame.init()
 board_cols = 4
@@ -108,14 +109,14 @@ while running:
 
 
     if not is_paused:
-        # 1. Draw background tiles and grid
+        screen.fill((255, 255, 255))
+        # background
         for i in range(game_board.rows):
             for j in range(game_board.cols):
                 tile_obj = game_board.array[i][j]
                 screen.blit(tile_obj.image, (j * tile_size, i * tile_size))
                 pygame.draw.rect(screen, (0, 0, 0), (j * tile_size, i * tile_size, tile_size, tile_size), 1)
 
-        # 2. Update wave logic
         if wave == 0:
             start_game = start_screen.draw(game_board, menu, tile_size)
             if start_game:
@@ -123,6 +124,9 @@ while running:
                     menu.set_wave(wave)
                     wave_begin_time = cur_time
         else:
+            
+
+
             wave_done, enemy_spawned_time, enemy_moved_time, enemies_spawned = handle_wave(
                 wave, game_board, menu, cur_time, tile_size,
                 enemy_spawned_time, enemy_moved_time, enemies_spawned, wave_begin_time
@@ -134,12 +138,23 @@ while running:
                 menu.set_wave(wave)
 
 
-            menu.draw()
-            for proj in game_board.projectiles[:]:  
+            # draw projectiles
+            for proj in game_board.projectiles[:]:
                 proj.move()
                 proj.draw(screen)
                 if proj.check_collision() or not proj.alive:
                     game_board.projectiles.remove(proj)
+
+            # draw enemies and towers
+            for i in range(game_board.rows):
+                for j in range(game_board.cols):
+                    item = game_board.array[i][j].item
+                    if isinstance(item, towers.Tower):
+                        screen.blit(item.sprite_surface, (j * tile_size, i * tile_size))
+                    elif isinstance(item, enemies.Enemy):
+                        screen.blit(pygame.image.load(item.sprite), (j * tile_size, i * tile_size))
+
+            menu.draw()
                 
     pygame.display.flip()
 

@@ -70,17 +70,22 @@ class Board:
                 tower = self.array[i][j].item
                 if tower is not None and isinstance(tower, towers.Tower):
                     if tower.currentHealth <= 0:
-                        self.array[i][j].item = None  # remove dead tower
+                        self.array[i][j].item = None
                     else:
                         for k in range(i - 1, max(i - tower.range - 1, -1), -1):
                             enemy = self.array[k][j].item
                             if enemy is not None and isinstance(enemy, enemies.Enemy):
                                 if enemy.currentHealth > 0:
-                                    #tower.attack_enemy(enemy)
-                                    new_projectile = projectile.Projectile(start_pos=(i*self.tile_size, j*self.tile_size), target=enemy, damage=tower.damage, range=tower.range, target_y=j*self.tile_size)
-
+                                    new_projectile = projectile.Projectile(
+                                        start_pos=(j * self.tile_size, i * self.tile_size), 
+                                        target=enemy,
+                                        damage=tower.damage,
+                                        range=tower.range,
+                                        target_y=k * self.tile_size  # enemy's row → Y
+                                    )
                                     self.projectiles.append(new_projectile)
-                                    break  # only attack one enemy
+                                    break
+
 
 
 

@@ -32,11 +32,8 @@ class Projectile:
         # Simple collision based on distance threshold
         #find target y from 
 
-
-
-
-        distance = self.target_y - self.y
-        if distance <= 0 or self.range >= self.y - self.start_y:  
+        distance = -1*( self.target_y - self.y)
+        if distance <= 0:  
             # attack enemy
             self.target.take_damage(self.damage)
             return True
