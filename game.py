@@ -140,8 +140,8 @@ while running:
 
             # draw projectiles
             for proj in game_board.projectiles[:]:
-                proj.move()
                 proj.draw(screen)
+                proj.move()
                 if proj.check_collision() or not proj.alive:
                     game_board.projectiles.remove(proj)
 

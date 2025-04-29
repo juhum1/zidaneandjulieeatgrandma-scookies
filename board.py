@@ -101,7 +101,6 @@ class Board:
                                 self.array[i][j].item = self.array[i][j].item.die(self)
     
                             else:
-                                print(f"Enemy at ({i}, {j}) died!")
                                 self.array[i][j].item = None
 
         return currency 

@@ -71,7 +71,6 @@ class Witch(Enemy):
         self.col = pos[1]
 
     def die(self, board):
-        print(f"Witch at ({self.row}, {self.col}) died!")
 
         #board.array[self.row][self.col].item = Skeleton()
         #board.add_enemy(Skeleton(), self.row, self.col)
