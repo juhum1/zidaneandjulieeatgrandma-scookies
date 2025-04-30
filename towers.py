@@ -36,6 +36,17 @@ class Tower(ABC):
                 enemy.currentHealth -= self.damage
                 self.lastAttackTime = pygame.time.get_ticks()
 
+    def shoot(self, enemy, board, i, j, k):
+        if self.can_attack() and enemy.currentHealth > 0:
+            new_proj = projectile.Projectile(
+                start_pos=(j * board.tile_size, i * board.tile_size),
+                target=enemy,
+                damage=self.damage,
+                range=self.range,
+                target_y=k * board.tile_size
+            )
+            board.projectiles.append(new_proj)
+            self.lastAttackTime = pygame.time.get_ticks()
 
 class Classic(Tower):
     def __init__(self):
@@ -58,7 +69,7 @@ class Fast(Tower):
         self.sprite = "assets/tower.png"
         self.damage = 40
         self.range = 3
-        self.attackSpeed = 2
+        self.attackSpeed = 3
         self.price = 150
         self.sprite_surface = scale_image(pygame.image.load(self.sprite).convert_alpha())
 

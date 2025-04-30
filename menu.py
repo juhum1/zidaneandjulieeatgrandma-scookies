@@ -5,7 +5,7 @@ import enemies
 class Menu:
     def __init__(self, screen, x_offset, width, height, currency):
         self.screen = screen
-        self.x_offset = x_offset  # The starting x index for the menu
+        self.x_offset = x_offset 
         self.width = width
         self.height = height
         self.currency = currency
@@ -55,9 +55,13 @@ class Menu:
 
     def click_menu_bar(self, x_pos, y_pos):
         if self.width - 100 <= x_pos <= self.width - 10 and 10 <= y_pos <= 45:
+            for tower in self.tower_options:
+                tower["selected"] = False
             pygame.draw.rect(self.screen, (255, 255, 255), (self.width/2 - 100, self.height/2 - 30, 200, 60)) 
             self.screen.blit(pygame.image.load("assets/restart.png"), (self.width/2-27, self.height/2-28))
             self.remove_clicked = False
+
+        
             return True
         return False
             
@@ -66,6 +70,9 @@ class Menu:
             board.clear_board()
             self.health = 500
             self.remove_clicked = False
+            for tower in self.tower_options:
+                tower["selected"] = False
+        
             return True
         return False
 
@@ -120,7 +127,11 @@ class Menu:
     def click_remove(self, x_pos, y_pos):
         if self.x_offset + 350 <= x_pos <= self.x_offset + 407 and 625 <= y_pos <= 682:
             self.remove_clicked = not self.remove_clicked
+            for tower in self.tower_options:
+                tower["selected"] = False
+        
             return True
+
         return False
 
     def remove_tower(self, board, x_pos, y_pos):
