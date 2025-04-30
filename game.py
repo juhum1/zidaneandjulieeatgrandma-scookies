@@ -35,6 +35,16 @@ remove = False
 
 enemies_arr = [enemies.Witch, enemies.Witch, enemies.Witch]
 
+
+
+pygame.mixer.init()
+pygame.mixer.music.load("assets/mingle.mp3")
+pygame.mixer.music.set_volume(0.5)
+wave_sfx = pygame.mixer.Sound("assets/wave.mp3")
+wave_sfx.set_volume(0.6)
+#pygame.mixer.music.play(-1)
+
+
 def handle_wave(wave_num, game_board, menu, cur_time, tile_size, enemy_spawned_time, enemy_moved_time, enemies_spawned, wave_begin_time):
     enemies_to_spawn = 10 + 5 * (wave_num - 1)
     spawn_rate = max(500, 2000 - 100 * (wave_num - 1))
@@ -120,22 +130,25 @@ while running:
         if wave == 0:
             start_game = start_screen.draw(game_board, menu, tile_size)
             if start_game:
+                    
                     wave += 1 
+                    pygame.mixer.music.play(-1)
                     menu.set_wave(wave)
                     wave_begin_time = cur_time
         else:
-            
-
 
             wave_done, enemy_spawned_time, enemy_moved_time, enemies_spawned = handle_wave(
                 wave, game_board, menu, cur_time, tile_size,
                 enemy_spawned_time, enemy_moved_time, enemies_spawned, wave_begin_time
             )
             if wave_done:
+                wave_sfx.play()
+
                 wave += 1
                 enemies_spawned = 0
                 wave_begin_time = pygame.time.get_ticks()
                 menu.set_wave(wave)
+
 
 
             # draw projectiles
