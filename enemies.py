@@ -22,8 +22,6 @@ class Enemy(ABC):
 
     def take_damage(self, damage: int):
         self.currentHealth -= damage
-        # if self.health <= 0:
-        #     self.die()
 
 
 class Goblin(Enemy):
@@ -71,7 +69,20 @@ class Witch(Enemy):
         self.col = pos[1]
 
     def die(self, board):
-
-        #board.array[self.row][self.col].item = Skeleton()
-        #board.add_enemy(Skeleton(), self.row, self.col)
         return Skeleton()
+
+
+class Giant_Skeleton(Enemy):
+    def __init__(self):
+        self.maxHealth = 5000
+        self.currentHealth = self.maxHealth
+        self.damage = 100
+        self.speed = 1
+        self.attackSpeed = 1
+        self.attackRange = 1
+        self.currency = 1000
+        self.sprite = "assets/giant_skeleton.png"
+        self.row = 0
+
+    def place_bomb(self):
+        pass
