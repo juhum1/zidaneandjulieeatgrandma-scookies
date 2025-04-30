@@ -33,7 +33,7 @@ paused_start_time = 0
 paused_total_time = 0
 remove = False
 
-enemies_arr = [enemies.Witch, enemies.Witch, enemies.Witch]
+enemies_arr = [enemies.Goblin, enemies.Skeleton, enemies.Witch]
 
 
 
