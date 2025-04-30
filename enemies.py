@@ -26,9 +26,9 @@ class Enemy(ABC):
 
 class Goblin(Enemy):
     def __init__(self):
-        self.maxHealth = 50 
+        self.maxHealth = 80 
         self.currentHealth = self.maxHealth
-        self.damage = 20
+        self.damage = 40
         self.speed = 2 
         self.attackSpeed = 1
         self.attackRange = 1
@@ -41,7 +41,7 @@ class Skeleton(Enemy):
     def __init__(self):
         self.maxHealth = 20 
         self.currentHealth = self.maxHealth
-        self.damage = 10
+        self.damage = 50
         self.speed = 1
         self.attackSpeed = 1
         self.attackRange = 1
@@ -53,9 +53,9 @@ class Skeleton(Enemy):
     
 class Witch(Enemy):
     def __init__(self):
-        self.maxHealth = 100
+        self.maxHealth = 150
         self.currentHealth = self.maxHealth
-        self.damage = 40
+        self.damage = 70
         self.speed = 1
         self.attackSpeed = 1
         self.attackRange = 3
