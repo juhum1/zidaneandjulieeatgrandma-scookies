@@ -39,9 +39,9 @@ class Menu:
             text = font.render(f"{tower['name']} - ${tower['price']}", True, (255, 255, 255))
             self.screen.blit(text, (self.x_offset + 40 + (index % 2) * 180, y_pos + 20))
             if tower["selected"]:
-                pygame.draw.rect(self.screen, (0, 200, 255), (self.x_offset + 20 + (index % 2) * 180, y_pos, 180, 160), 3)
+                pygame.draw.rect(self.screen, (0, 200, 255), (self.x_offset + 20 + (index % 2) * 180, y_pos, 200, 160), 3)
         
-        self.screen.blit(pygame.image.load("assets/bomb.png"), (self.x_offset + 350, y_pos + 425))
+        self.screen.blit(pygame.image.load("assets/bomb.png"), (self.x_offset + 350, 625))
         if self.remove_clicked:
             pygame.draw.rect(self.screen, (255, 0, 0), (self.x_offset + 350, y_pos + 425, 60, 60), 4)
 

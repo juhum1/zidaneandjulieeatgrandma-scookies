@@ -15,7 +15,7 @@ class Start_Screen:
             pygame.draw.rect(self.screen, (255, 255, 255), (self.width/2 - 50 , self.height/2 + 200, 100, 40))
             font = pygame.font.Font(None, 36)
             self.screen.blit(font.render("START", True, (0, 0, 0)), (self.width/2 - 38, self.height/2 + 208))
-        else:
+        else: 
             for i in range(game_board.rows):
                 for j in range(game_board.cols):
                     tile_obj = game_board.array[i][j]
@@ -26,10 +26,7 @@ class Start_Screen:
                     elif isinstance(tile_obj.item, enemies.Enemy):
                         self.screen.blit(pygame.image.load(tile_obj.item.sprite), (j * tile_size, i * tile_size))
             menu.draw()
-            self.screen.blit(pygame.image.load("assets/king_laugh.png"), (self.width - 250, self.height/2))
-             
-            return True 
-        
+            return True
 
     def click_start(self, x_pos, y_pos):
         if (self.width/2 - 49 <= x_pos <= self.width/2 + 99 and self.height/2 + 200 <= y_pos <= self.height/2 + 240):
