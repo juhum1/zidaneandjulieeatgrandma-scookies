@@ -13,6 +13,9 @@ class Start_Screen:
         if self.clicked == False:
             pygame.draw.rect(self.screen, (32, 35, 54), (0, 0, self.width, self.height))
             pygame.draw.rect(self.screen, (255, 255, 255), (self.width/2 - 50 , self.height/2 + 200, 100, 40))
+            font = pygame.font.Font(None, 60)
+            self.screen.blit(font.render("TOWER DEFENSE", True, (255, 255, 255)), (self.width/2 - 180, self.height/2 - 200))
+            self.screen.blit(pygame.image.load("assets/king_laugh.png"), (self.width/2 - 125, self.height/2 - 100))
             font = pygame.font.Font(None, 36)
             self.screen.blit(font.render("START", True, (0, 0, 0)), (self.width/2 - 38, self.height/2 + 208))
         else: 
