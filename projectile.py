@@ -32,12 +32,6 @@ class Projectile:
         # Simple collision based on distance 
         distance = -1*( self.target_y - self.y)
         if distance <= 0:  
-            if self.damage == 25:  # if projectile slowing tower, slow the enemy as well
-                self.target.speed *= 0.5 
-            # attack enemy
             self.target.take_damage(self.damage, board)
-            # ——— NEW: apply slow if provided ———
-            if self.slow_factor is not None:
-                self.target.apply_slow(self.slow_factor, self.slow_duration)
             return True
         return False

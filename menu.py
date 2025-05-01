@@ -14,7 +14,6 @@ class Menu:
             {"name": "Fast Tower", "price": towers.Fast.get_price(), "image": pygame.image.load(towers.Fast.get_sprite_path()), "selected": False},
             {"name": "Heavy Tower", "price": towers.Heavy.get_price(), "image": pygame.image.load(towers.Heavy.get_sprite_path()), "selected": False},
             {"name": "Princess Tower", "price": towers.Princess.get_price(), "image": pygame.image.load(towers.Princess.get_sprite_path()), "selected": False},
-            {"name": "Slowing Tower", "price": towers.Slowing.get_price(), "image": pygame.image.load(towers.Slowing.get_sprite_path()), "selected": False},
             {"name": "Bomb Tower", "price": towers.Bomb.get_price(), "image": pygame.image.load(towers.Bomb.get_sprite_path()), "selected": False}
 
             ]
