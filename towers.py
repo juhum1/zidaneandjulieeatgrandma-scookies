@@ -23,9 +23,10 @@ class Tower(ABC):
         self.range = 1
         self.lastAttackTime = 0  
 
+
     def can_attack(self):
         now = pygame.time.get_ticks()
-        return (now - self.lastAttackTime) >= self.attackSpeed * 1000 # 1000 bc pygame time is in ms, essentially checking if enough time has passed since last attack
+        return (now - self.lastAttackTime) >= 1000 / self.attackSpeed  # 1000 bc pygame time is in ms, essentially checking if enough time has passed since last attack
 
     def attack_enemy(self, enemy):
         if self.can_attack():
@@ -43,7 +44,8 @@ class Tower(ABC):
                 target=enemy,
                 damage=self.damage,
                 range=self.range,
-                target_y=k * board.tile_size
+                target_y=k * board.tile_size,
+                board=board
             )
             board.projectiles.append(new_proj)
             self.lastAttackTime = pygame.time.get_ticks()

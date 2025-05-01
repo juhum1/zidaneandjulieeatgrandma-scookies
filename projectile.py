@@ -2,13 +2,13 @@ import pygame
 import math
 
 class Projectile:
-    def __init__(self, target_y, start_pos, target, damage, speed=30, range=1, sprite_path="assets/fireball.png"):
+    def __init__(self, target_y, start_pos, target, damage, speed=30, range=1, sprite_path="assets/fireball.png", board=None):
 
         self.x, self.y = start_pos
         self.start_y = start_pos[1]
         self.target_y = target_y
         self.range = range
-        self.target = target  # The enemy or tower it's chasing
+        self.target = target 
         self.damage = damage
         self.speed = speed
         self.sprite = pygame.image.load(sprite_path).convert_alpha()
@@ -24,17 +24,15 @@ class Projectile:
 
     def draw(self, screen):
         fireball = self.sprite.copy()
-        fireball.set_alpha(150)  # from 0 (invisible) to 255 (fully visible)
+        fireball.set_alpha(150)  
         screen.blit(fireball, (self.x, self.y))
 
-    def check_collision(self):
-        # Simple collision based on distance threshold
-        #find target y from 
-
+    def check_collision(self, board):
+        # Simple collision based on distance 
         distance = -1*( self.target_y - self.y)
         if distance <= 0:  
             # attack enemy
-            self.target.take_damage(self.damage)
+            self.target.take_damage(self.damage, board)
             return True
         return False
 

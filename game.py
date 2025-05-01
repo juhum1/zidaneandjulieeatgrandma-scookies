@@ -7,6 +7,7 @@ import random
 import start_screen
 import projectile
 
+pygame.mixer.pre_init(44100, -16, 2, 4096)
 pygame.init()
 board_cols = 4
 board_rows = 10
@@ -33,15 +34,16 @@ paused_start_time = 0
 paused_total_time = 0
 remove = False
 
-enemies_arr = [enemies.Goblin, enemies.Skeleton, enemies.Witch]
+#enemies_arr = [enemies.Goblin, enemies.Skeleton, enemies.Witch, enemies.Necromancer, enemies.Bat, enemies.Ogre, enemies.Bandit, enemies.Slime]
+enemies_arr = [enemies.FireImp, enemies.FireImp, enemies.FireImp, enemies.FireImp, enemies.FireImp, enemies.FireImp, enemies.FireImp]         
 
 
 
 pygame.mixer.init()
-pygame.mixer.music.load("assets/mingle.mp3")
+pygame.mixer.music.load("assets/pvz.wav")
 pygame.mixer.music.set_volume(0.5)
 wave_sfx = pygame.mixer.Sound("assets/wave.mp3")
-wave_sfx.set_volume(0.6)
+wave_sfx.set_volume(0.5)
 #pygame.mixer.music.play(-1)
 
 
@@ -155,7 +157,7 @@ while running:
             for proj in game_board.projectiles[:]:
                 proj.draw(screen)
                 proj.move()
-                if proj.check_collision() or not proj.alive:
+                if proj.check_collision(game_board) or not proj.alive:
                     game_board.projectiles.remove(proj)
 
             # draw enemies and towers
