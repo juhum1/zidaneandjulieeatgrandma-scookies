@@ -101,8 +101,6 @@ class Menu:
                             self.selected_tower = towers.Heavy()
                         case "Princess Tower":
                             self.selected_tower = towers.Princess()
-                        case "Slowing Tower":
-                            self.selected_tower = towers.Slowing()
                         case "Bomb Tower":  
                             self.selected_tower = towers.Bomb()
 
