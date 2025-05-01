@@ -91,7 +91,7 @@ class Menu:
                     for t in self.tower_options:
                         t["selected"] = False
                         tower["selected"] = True
-                    match tower["name"]:
+                    match tower["name"]: # match statement to select tower type
                         case "Basic Tower":
                             self.selected_tower = towers.Classic()
                         case "Fast Tower":
@@ -102,14 +102,14 @@ class Menu:
                             self.selected_tower = towers.Princess()
                         case "Slowing Tower":
                             self.selected_tower = towers.Slowing()
-
+                        
 
 
                     return tower
 
         return None
 
-    def place_tower(self, board, x_pos, y_pos):
+    def place_tower(self, board, x_pos, y_pos): 
         if not self.selected_tower:
             return False
         col = x_pos // board.tile_size
@@ -136,7 +136,7 @@ class Menu:
 
         return False
 
-    def remove_tower(self, board, x_pos, y_pos):
+    def remove_tower(self, board, x_pos, y_pos): # removes tower if remove_clicked is True
         col = x_pos // board.tile_size
         row = y_pos // board.tile_size
         if 0 <= col < board.cols and 0 <= row < board.rows and isinstance(board.array[row][col].item, towers.Tower):
@@ -166,12 +166,12 @@ class Menu:
             return False
         return True
 
-    def quit(self, x_pos, y_pos):
+    def quit(self, x_pos, y_pos): # leaves game
         if self.health <= 0 and self.width/2 - 110 <= x_pos <= self.width/2 - 40 and self.height/2 + 30 <= y_pos <= self.height/2 + 60:
             return True
         return False
 
-    def play_again(self, x_pos, y_pos):
+    def play_again(self, x_pos, y_pos): # in game.py everything resets
         if self.health <= 0 and self.width/2 + 40 <= x_pos <= self.width/2 + 100 and self.height/2 + 30 <= y_pos <= self.height/2 + 60:
             self.health = 500
             return True 

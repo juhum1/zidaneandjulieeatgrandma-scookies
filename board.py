@@ -20,17 +20,20 @@ class Board:
         return board_str
    
     def clear_board(self):
+        # removes all tiles
         for i in range(self.rows):
             for j in range(self.cols):
                 self.array[i][j].item = None 
 
     def add_enemy(self, enemy, row, col):
+        # adds an enemy to the board at the specified row and column
         if col < self.cols and self.array[row][col].item is None:
             enemy.row = row
             enemy.col = col
             self.array[row][col].item = enemy
 
     def move_enemies(self, board):
+        # moves enemies down the board and checks for damage
         damage = 0
         for i in range(self.rows - 1, -1, -1):
             for j in range(self.cols):
@@ -53,6 +56,7 @@ class Board:
         return damage       
 
     def wave_over(self, num_enemies, spawn_rate, time_passed):
+        # if the time passed exceeds the total time for all enemies to spawn, check if all enemies are dead
         if time_passed > num_enemies * spawn_rate: 
             for i in range(self.rows - 1, -1, -1):
                 for j in range(self.cols):
@@ -62,6 +66,7 @@ class Board:
             return True
 
     def tower_attack(self):
+        # shoots all enemies at same interval
         for i in range(self.rows):
             for j in range(self.cols):
                 tower = self.array[i][j].item
@@ -78,6 +83,7 @@ class Board:
 
 
     def death(self):
+        # detects enemy deaths and returns currency earned
         currency = 0
         for i in range(self.rows):
             for j in range(self.cols):

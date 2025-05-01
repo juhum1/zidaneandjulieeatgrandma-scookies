@@ -26,7 +26,7 @@ class Projectile:
         fireball = self.sprite.copy()
         screen.blit(fireball, (self.x, self.y))
 
-    def check_collision(self, board):
+    def check_collision(self, board):   # takes board as an argument to access the target's position (used for bandit teleport)
         # Simple collision based on distance 
         distance = -1*( self.target_y - self.y)
         if distance <= 0:  
