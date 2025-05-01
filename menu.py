@@ -15,7 +15,7 @@ class Menu:
             {"name": "Heavy Tower", "price": towers.Heavy.get_price(), "image": pygame.image.load(towers.Heavy.get_sprite_path()), "selected": False},
             {"name": "Princess Tower", "price": towers.Princess.get_price(), "image": pygame.image.load(towers.Princess.get_sprite_path()), "selected": False},
             {"name": "Slowing Tower", "price": towers.Slowing.get_price(), "image": pygame.image.load(towers.Slowing.get_sprite_path()), "selected": False},
-        
+            {"name": "Bomb Tower", "price": towers.Bomb.get_price(), "image": pygame.image.load(towers.Bomb.get_sprite_path()), "selected": False}
 
             ]
 
@@ -23,6 +23,8 @@ class Menu:
         self.health = 500  
         self.wave = 0
         self.remove_clicked = False
+        self.tower_clicked = None
+
 
     def draw(self):
         pygame.draw.rect(self.screen, (100, 100, 100), (self.x_offset, 0, self.width, self.height))  # change to tiles later
@@ -102,8 +104,8 @@ class Menu:
                             self.selected_tower = towers.Princess()
                         case "Slowing Tower":
                             self.selected_tower = towers.Slowing()
-                        
-
+                        case "Bomb Tower":  
+                            self.selected_tower = towers.Bomb()
 
                     return tower
 
@@ -177,6 +179,41 @@ class Menu:
             return True 
         return False
 
+    def click_tower(self, x_pos, y_pos, board):
+        col = x_pos // board.tile_size
+        row = y_pos // board.tile_size
+        if 0 <= col < board.cols and 0 <= row < board.rows:
+            tower = board.array[row][col].item
+            if isinstance(tower, towers.Tower):
+                self.selected_tower = None
+                for t in self.tower_options:
+                    t["selected"] = False
+                self.remove_clicked = False
+                if self.tower_clicked == (row, col):
+                    self.tower_clicked = None  # deselect tower if already selected
+                else:
+                    self.tower_clicked = (row, col)
+                
+                return True
+        self.tower_clicked = None
+        return False
 
+
+
+
+    def show_tower_health(self, board, x_pos, y_pos):
+        if self.tower_clicked is not None:
+            row, col = self.tower_clicked
+            if 0 <= col < board.cols and 0 <= row < board.rows:
+                tower = board.array[row][col].item
+                if isinstance(tower, towers.Tower):
+                    health_ratio = tower.currentHealth / tower.maxHealth
+                    bar_width = 80
+                    bar_height = 10
+                    x = col * board.tile_size + (board.tile_size - bar_width) // 2
+                    y = row * board.tile_size - bar_height - 5
+
+                    pygame.draw.rect(self.screen, (255, 0, 0), (x, y, bar_width, bar_height))  # red background
+                    pygame.draw.rect(self.screen, (0, 255, 0), (x, y, bar_width * health_ratio, bar_height))  # green foreground
     if __name__ == "__main__":
         print("This is a menu module. It should not be run directly.")

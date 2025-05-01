@@ -118,6 +118,10 @@ while running:
                 menu.health = 500
                 wave = 0
 
+            if menu.click_tower(event.pos[0], event.pos[1], game_board):
+                pass
+
+
             if menu.click_remove(event.pos[0], event.pos[1]):
                 remove = not remove
             elif remove:
@@ -198,6 +202,8 @@ while running:
                         screen.blit(pygame.image.load(item.sprite), (j * tile_size, i * tile_size))
 
             menu.draw()
+            menu.show_tower_health(game_board, pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])
+
 
     if not wave_cleared:
         pygame.draw.rect(screen, (0, 0, 0), (width/2 - 150, height/2 - 75, 300, 150))
