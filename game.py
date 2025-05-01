@@ -117,6 +117,8 @@ while running:
                 menu.currency = 500
                 menu.health = 500
                 wave = 0
+                menu = menu.Menu(screen, board_cols * tile_size, width, height, 500)  # ← RE-INIT THE MENU SLAY
+
 
             if menu.click_tower(event.pos[0], event.pos[1], game_board):
                 pass
