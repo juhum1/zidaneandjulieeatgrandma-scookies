@@ -2,7 +2,7 @@ import pygame
 import math
 
 class Projectile:
-    def __init__(self, target_y, start_pos, target, damage, speed=30, range=1, sprite_path="assets/fireball.png", board=None):
+    def __init__(self, target_y, start_pos, target, damage, speed=100, range=1, sprite_path="assets/fireball.png", board=None):
 
         self.x, self.y = start_pos
         self.start_y = start_pos[1]
@@ -24,7 +24,6 @@ class Projectile:
 
     def draw(self, screen):
         fireball = self.sprite.copy()
-        fireball.set_alpha(150)  
         screen.blit(fireball, (self.x, self.y))
 
     def check_collision(self, board):

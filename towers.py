@@ -70,7 +70,7 @@ class Fast(Tower):
         self.currentHealth = self.maxHealth
         self.sprite = "assets/tower.png"
         self.damage = 40
-        self.range = 3
+        self.range = 2
         self.attackSpeed = 3
         self.price = 150
         self.sprite_surface = scale_image(pygame.image.load(self.sprite).convert_alpha())

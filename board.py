@@ -73,14 +73,6 @@ class Board:
                             enemy = self.array[k][j].item
                             if enemy is not None and isinstance(enemy, enemies.Enemy):
                                 if enemy.currentHealth > 0:
-                                    new_projectile = projectile.Projectile(
-                                        start_pos = (j * self.tile_size, i * self.tile_size), 
-                                        target = enemy,
-                                        damage = tower.damage,
-                                        range = tower.range,
-                                        target_y = k * self.tile_size  # enemy's row → Y
-                                    )
-                                    self.projectiles.append(new_projectile)
                                     tower.shoot(enemy, self, i, j, k)
                                     break
 

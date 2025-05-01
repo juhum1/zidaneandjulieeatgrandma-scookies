@@ -50,14 +50,13 @@ wave_sfx.set_volume(0.5)
 
 def handle_wave(wave_num, game_board, menu, cur_time, tile_size, enemy_spawned_time, enemy_moved_time, tower_attack_time, enemies_spawned, wave_begin_time, wave_cleared):
     enemies_to_spawn = 10 + 5 * (wave_num - 1)
+    move_rate = max(400, 1500 - 100 * (wave_num - 1))
     spawn_rate = max(500, 2000 - 100 * (wave_num - 1))
-#    move_rate = max(400, 1500 - 100 * (wave_num - 1))
-    move_rate = 100
-    attack_rate = 2500
+
+    game_board.tower_attack()
 
     if cur_time - enemy_moved_time >= move_rate:
         wave_cleared = menu.update_health(game_board.move_enemies(game_board))
-        game_board.tower_attack()
         enemy_moved_time = cur_time
     
     if cur_time - enemy_spawned_time >= spawn_rate:
@@ -108,6 +107,7 @@ while running:
                     enemy_moved_time -= paused_time
 
             if menu.click_restart_button(game_board, event.pos[0], event.pos[1]) and is_paused:
+                pygame.mixer.music.stop()
                 cur_time = enemy_spawned_time = enemy_moved_time = pygame.time.get_ticks()
                 paused_start_time = paused_total_time = 0
                 enemies_spawned = 0
