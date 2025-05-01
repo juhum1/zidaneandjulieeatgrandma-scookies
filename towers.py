@@ -144,6 +144,8 @@ class Slowing (Tower):
         self.attackSpeed = 1
         self.price = 200
         self.sprite_surface = scale_image(pygame.image.load(self.sprite).convert_alpha())
+
+        
     
     @staticmethod
     def get_price():
@@ -153,6 +155,23 @@ class Slowing (Tower):
     def get_sprite_path():
         return "assets/slow_tower.png"
 
+
+    
+    def shoot(self, enemy, board, i, j, k):
+        if self.can_attack() and enemy.currentHealth > 0:
+            new_proj = projectile.Projectile(
+                start_pos=(j * board.tile_size, i * board.tile_size),
+                target=enemy,
+                damage=self.damage,
+                range=self.range,
+                target_y=k * board.tile_size,
+                board=board
+            )
+            board.projectiles.append(new_proj)
+            self.lastAttackTime = pygame.time.get_ticks()
+
+
+            
 class Bomb(Tower):
     def __init__(self):
         self.maxHealth = 150
