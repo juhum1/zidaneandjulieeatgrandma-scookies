@@ -1,6 +1,10 @@
 ## Compilation Steps
 python3 game.py
 
+## Sources
+https://github.com/smlbiobot/cr-assets-png/blob/master/assets/sc/building_tower_tex.png
+
+# Proposal
 ## Tower Defense Simulator
 
 ### Who are you working with? (you may work in teams of up to 2)
