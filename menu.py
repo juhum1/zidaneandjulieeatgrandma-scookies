@@ -22,6 +22,7 @@ class Menu:
         self.health = 500  
         self.wave = 0
         self.remove_clicked = False
+        self.menu_clicked = False
         self.tower_clicked = None
 
 
@@ -64,12 +65,12 @@ class Menu:
                 tower["selected"] = False
             pygame.draw.rect(self.screen, (255, 255, 255), (self.width/2 - 100, self.height/2 - 30, 200, 60)) 
             self.screen.blit(pygame.image.load("assets/restart.png"), (self.width/2-27, self.height/2-28))
-            self.remove_clicked = True
+            self.menu_clicked = True
             return True
         return False
             
     def click_restart_button(self, board, x_pos, y_pos):   # restarts wave
-        if self.width/2 - 30 <= x_pos <= self.width/2 + 94 and self.height/2 - 30 <= y_pos <= self.height/2 + 94:
+        if self.menu_clicked and self.width/2 - 30 <= x_pos <= self.width/2 + 94 and self.height/2 - 30 <= y_pos <= self.height/2 + 94:
             board.clear_board()
             self.health = 500
             self.remove_clicked = False
