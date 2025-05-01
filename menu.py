@@ -13,9 +13,15 @@ class Menu:
             {"name": "Basic Tower", "price": towers.Classic.get_price(), "image": pygame.image.load("assets/wizard.png"), "selected": False},
             {"name": "Fast Tower", "price": towers.Fast.get_price(), "image": pygame.image.load(towers.Fast.get_sprite_path()), "selected": False},
             {"name": "Heavy Tower", "price": towers.Heavy.get_price(), "image": pygame.image.load(towers.Heavy.get_sprite_path()), "selected": False},
+<<<<<<< Updated upstream
             {"name": "Princess Tower", "price": towers.Princess.get_price(), "image": pygame.image.load(towers.Princess.get_sprite_path()), "selected": False},
+=======
+            {"name": "Slowing Tower", "price": towers.Slowing.get_price(), "image": pygame.image.load(towers.Slowing.get_sprite_path()), "selected": False},
+        
 
-        ]
+            ]
+>>>>>>> Stashed changes
+
         self.selected_tower = None
         self.health = 500  
         self.wave = 0
@@ -95,8 +101,15 @@ class Menu:
                             self.selected_tower = towers.Fast()
                         case "Heavy Tower":
                             self.selected_tower = towers.Heavy()
+<<<<<<< Updated upstream
                         case "Princess Tower":
                             self.selected_tower = towers.Princess()
+=======
+                        case "Slowing Tower":
+                            self.selected_tower = towers.Slowing()
+
+
+>>>>>>> Stashed changes
 
                     return tower
 

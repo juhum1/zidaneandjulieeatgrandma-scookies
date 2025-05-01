@@ -95,7 +95,7 @@ class Heavy(Tower):
         self.maxHealth = 300
         self.lastAttackTime = 0 
         self.currentHealth = self.maxHealth
-        self.sprite = "assets/tower.png"
+        self.sprite = "assets/heavy.png"
         self.damage = 100 
         self.range = 3
         self.attackSpeed = 0.5
@@ -108,6 +108,7 @@ class Heavy(Tower):
 
     @staticmethod
     def get_sprite_path():
+<<<<<<< Updated upstream
         return "assets/tower.png"
 
 class Princess(Tower):
@@ -120,12 +121,34 @@ class Princess(Tower):
         self.range = 6
         self.attackSpeed = 0.2
         self.price = 250
+=======
+        return "assets/heavy.png"
+
+class Slowing (Tower):
+    def __init__(self):
+        self.maxHealth = 150
+        self.lastAttackTime = 0 
+        self.currentHealth = self.maxHealth
+        self.sprite = "assets/slow_tower.png"
+        self.damage = 100 
+        self.range = 3
+        self.attackSpeed = 0.5
+        self.price = 200
+>>>>>>> Stashed changes
         self.sprite_surface = scale_image(pygame.image.load(self.sprite).convert_alpha())
 
     @staticmethod
     def get_price():
+<<<<<<< Updated upstream
         return 250
 
     @staticmethod
     def get_sprite_path():
         return "assets/princess.png"
+=======
+        return 200
+
+    @staticmethod
+    def get_sprite_path():
+        return "assets/slow_tower.png"
+>>>>>>> Stashed changes
