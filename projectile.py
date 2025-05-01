@@ -28,18 +28,12 @@ class Projectile:
         fireball = self.sprite.copy()
         screen.blit(fireball, (self.x, self.y))
 
-<<<<<<< HEAD
     def check_collision(self, board):
         if self.target_y - self.y <= 0:
-=======
-    def check_collision(self, board):   # takes board as an argument to access the target's position (used for bandit teleport)
-        # Simple collision based on distance 
-        distance = -1*( self.target_y - self.y)
-        if distance <= 0:  
+            distance = -1*( self.target_y - self.y)
             if self.damage == 25:  # if projectile slowing tower, slow the enemy as well
                 self.target.speed *= 0.5 
             # attack enemy
->>>>>>> e846b5901af1d1528c86891582b5ed9f22f6f4ad
             self.target.take_damage(self.damage, board)
             # ——— NEW: apply slow if provided ———
             if self.slow_factor is not None:

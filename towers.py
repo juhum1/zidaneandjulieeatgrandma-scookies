@@ -145,8 +145,6 @@ class Slowing (Tower):
         self.price = 200
         self.sprite_surface = scale_image(pygame.image.load(self.sprite).convert_alpha())
 
-<<<<<<< HEAD
-    slow_factor = 0.5   
     slow_duration = 2000 
     def shoot(self, enemy, board, i, j, k):
         if self.can_attack() and enemy.currentHealth > 0:
@@ -163,10 +161,6 @@ class Slowing (Tower):
             board.projectiles.append(new_proj)
             self.lastAttackTime = pygame.time.get_ticks()
 
-=======
-        
-    
->>>>>>> e846b5901af1d1528c86891582b5ed9f22f6f4ad
     @staticmethod
     def get_price():
         return 200
