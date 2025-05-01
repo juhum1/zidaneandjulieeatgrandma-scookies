@@ -185,7 +185,14 @@ class Menu:
         if 0 <= col < board.cols and 0 <= row < board.rows:
             tower = board.array[row][col].item
             if isinstance(tower, towers.Tower):
-                self.tower_clicked = (row, col)
+                self.selected_tower = None
+                for t in self.tower_options:
+                    t["selected"] = False
+                self.remove_clicked = False
+                if self.tower_clicked == (row, col):
+                    self.tower_clicked = None  # deselect tower if already selected
+                else:
+                    self.tower_clicked = (row, col)
                 
                 return True
         self.tower_clicked = None
