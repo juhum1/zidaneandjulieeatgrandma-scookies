@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 import pygame
+import enemies
 import projectile
+
 def scale_image(img):
         rect = img.get_bounding_rect()
         scale_imageped = img.subsurface(rect).copy()
@@ -150,3 +152,46 @@ class Slowing (Tower):
     @staticmethod
     def get_sprite_path():
         return "assets/slow_tower.png"
+
+class Bomb(Tower):
+    def __init__(self):
+        self.maxHealth = 150
+        self.lastAttackTime = 0 
+        self.currentHealth = self.maxHealth
+        self.sprite = "assets/bomb_tower.png"
+        self.damage = 75 
+        self.range = 2
+        self.attackSpeed = 0.8
+        self.price = 200
+        self.sprite_surface = scale_image(pygame.image.load(self.sprite).convert_alpha())
+    
+    @staticmethod
+    def get_price():
+        return 200
+
+    @staticmethod
+    def get_sprite_path():
+        return "assets/bomb_tower.png"
+
+    def shoot(self, enemy, board, i, j, k):
+        if self.can_attack():
+            enemies_hit = []
+            for col_offset in [-1, 0, 1]:
+                col = j + col_offset
+                if 0 <= col < board.cols:
+                    target = board.array[k][col].item
+                    if isinstance(target, enemies.Enemy) and target.currentHealth > 0:
+                        enemies_hit.append(target)
+
+            for target in enemies_hit:
+                new_proj = projectile.Projectile(
+                    start_pos=(j * board.tile_size, i * board.tile_size),
+                    target=target,
+                    damage=self.damage,
+                    range=self.range,
+                    target_y=k * board.tile_size,
+                    board=board
+                )
+                board.projectiles.append(new_proj)
+
+            self.lastAttackTime = pygame.time.get_ticks()
