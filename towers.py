@@ -120,6 +120,7 @@ class Princess(Tower):
         self.range = 6
         self.attackSpeed = 0.2
         self.price = 250
+        self.sprite_surface = scale_image(pygame.image.load(self.sprite).convert_alpha())
 
     @staticmethod
     def get_price():
