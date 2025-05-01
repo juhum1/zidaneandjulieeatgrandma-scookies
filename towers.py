@@ -139,9 +139,9 @@ class Slowing (Tower):
         self.lastAttackTime = 0 
         self.currentHealth = self.maxHealth
         self.sprite = "assets/slow_tower.png"
-        self.damage = 100 
+        self.damage = 25 
         self.range = 3
-        self.attackSpeed = 0.5
+        self.attackSpeed = 1
         self.price = 200
         self.sprite_surface = scale_image(pygame.image.load(self.sprite).convert_alpha())
     
