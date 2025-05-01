@@ -3,7 +3,7 @@ import sys
 import enemies
 import board
 import towers
-import menu
+from menu import Menu
 import random
 import start_screen
 import projectile
@@ -24,7 +24,7 @@ running = True
 
 start_screen = start_screen.Start_Screen(screen, width, height)
 game_board = board.Board(board_cols, board_rows, tile_size)
-menu = menu.Menu(screen, board_cols * tile_size, width, height, 500)
+menu = Menu(screen, board_cols * tile_size, width, height, 500)
 
 start_game = False
 play_num = 1
@@ -117,7 +117,7 @@ while running:
                 menu.currency = 500
                 menu.health = 500
                 wave = 0
-                menu = menu.Menu(screen, board_cols * tile_size, width, height, 500) # new menu
+                menu = Menu(screen, board_cols * tile_size, width, height, 500) # new menu
 
 
             if menu.click_tower(event.pos[0], event.pos[1], game_board):
@@ -143,6 +143,7 @@ while running:
                 paused_start_time = 0
                 paused_total_time = 0
                 remove = False
+                menu = Menu(screen, board_cols * tile_size, width, height, 500) # new menu
                 
             if menu.quit(event.pos[0], event.pos[1]):
                 pygame.quit()
