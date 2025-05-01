@@ -26,10 +26,9 @@ class Start_Screen:
                     elif isinstance(tile_obj.item, enemies.Enemy):
                         self.screen.blit(pygame.image.load(tile_obj.item.sprite), (j * tile_size, i * tile_size))
             menu.draw()
-
-            # tutorial
-
-            return True
+            self.screen.blit(pygame.image.load("assets/king_laugh.png"), (self.width - 250, self.height/2))
+             
+            return True 
         
 
     def click_start(self, x_pos, y_pos):

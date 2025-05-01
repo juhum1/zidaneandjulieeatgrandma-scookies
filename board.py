@@ -45,7 +45,8 @@ class Board:
                         self.array[i][j].item = None
                         enemy.row = next_row
                         enemy.col = j
-                    elif (next_row + enemy.attackRange - 1) < self.rows:
+                    elif (next_row + enemy.attackRange - 1) < self.rows - 1:
+                        print(f"{next_row + enemy.attackRange - 1}")
                         if isinstance(self.array[next_row + enemy.attackRange - 1][j].item, towers.Tower):
                             enemy.attack_tower(self.array[next_row + enemy.attackRange - 1][j].item)
                     elif isinstance(self.array[next_row][j].item, enemies.Enemy):

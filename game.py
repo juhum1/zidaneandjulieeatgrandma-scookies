@@ -27,6 +27,7 @@ game_board = board.Board(board_cols, board_rows, tile_size)
 menu = menu.Menu(screen, board_cols * tile_size, width, height, 500)
 
 start_game = False
+play_num = 1
 wave = 0
 wave_cleared = True
 enemies_spawned = 0
@@ -54,7 +55,6 @@ def handle_wave(wave_num, game_board, menu, cur_time, tile_size, enemy_spawned_t
     move_rate = max(400, 1000 - 100 * (wave_num - 1))
     spawn_rate = max(500, 2000 - 100 * (wave_num - 1))
     game_board.tower_attack()
-    move_rate = max(400, 1500 - 100 * (wave_num - 1))
 
     if cur_time - enemy_moved_time >= move_rate:
         wave_cleared = menu.update_health(game_board.move_enemies(game_board))
@@ -126,8 +126,9 @@ while running:
             
             if menu.play_again(event.pos[0], event.pos[1]):
                 game_board.clear_board()
-                wave = 1
-                wave_cleared = True
+                wave = 0
+                play_num += 1
+                wave_cleared = True 
                 enemies_spawned = 0
                 enemy_spawned_time = pygame.time.get_ticks()
                 enemy_moved_time = pygame.time.get_ticks()
@@ -151,13 +152,18 @@ while running:
                 pygame.draw.rect(screen, (0, 0, 0), (j * tile_size, i * tile_size, tile_size, tile_size), 1)
 
         if wave == 0:
-            start_game = start_screen.draw(game_board, menu, tile_size)
-            if start_game:
-                    
-                    wave += 1 
-                    pygame.mixer.music.play(-1)
-                    menu.set_wave(wave)
-                    wave_begin_time = cur_time
+            if play_num == 1:
+                start_game = start_screen.draw(game_board, menu, tile_size)
+                if start_game:
+                        wave += 1 
+                        pygame.mixer.music.play(-1)
+                        menu.set_wave(wave)
+                        wave_begin_time = cur_time
+            else:
+                wave += 1 
+                pygame.mixer.music.play(-1)
+                menu.set_wave(wave)
+                wave_begin_time = cur_time
         else:
 
             wave_done, enemy_spawned_time, enemy_moved_time, enemies_spawned, wave_cleared = handle_wave(

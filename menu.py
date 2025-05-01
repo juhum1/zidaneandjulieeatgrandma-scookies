@@ -168,6 +168,7 @@ class Menu:
 
     def play_again(self, x_pos, y_pos):
         if self.health <= 0 and self.width/2 + 40 <= x_pos <= self.width/2 + 100 and self.height/2 + 30 <= y_pos <= self.height/2 + 60:
+            self.health = 500
             return True 
         return False
 
