@@ -1,6 +1,7 @@
 ## Compilation Steps
 python3 game.py
 
+MAKE SURE TO INSTALL PYGAME
 ## Sources
 https://github.com/smlbiobot/cr-assets-png/blob/master/assets/sc/building_tower_tex.png
 
