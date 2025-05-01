@@ -142,7 +142,24 @@ class Slowing (Tower):
         self.attackSpeed = 0.5
         self.price = 200
         self.sprite_surface = scale_image(pygame.image.load(self.sprite).convert_alpha())
-    
+
+    slow_factor = 0.5   
+    slow_duration = 2000 
+    def shoot(self, enemy, board, i, j, k):
+        if self.can_attack() and enemy.currentHealth > 0:
+            new_proj = projectile.Projectile(
+                start_pos = (j * board.tile_size, i * board.tile_size),
+                target = enemy,
+                damage = self.damage,
+                range = self.range,
+                target_y = k * board.tile_size,
+                board = board,
+                slow_factor   = 0.5,    # slows to 50%
+                slow_duration = 2000    # for 2000 ms (2 s)
+            )
+            board.projectiles.append(new_proj)
+            self.lastAttackTime = pygame.time.get_ticks()
+
     @staticmethod
     def get_price():
         return 200

@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import board
 import random
 import towers
+import pygame
 
 class Enemy(ABC):
     def __init__(self):
@@ -15,15 +16,28 @@ class Enemy(ABC):
         self.sprite = None
         self.row = 0
         self.col = 0
+        self.slowed = False
+        self.base_speed = 1.0
+        self.speed = self.base_speed
+        self.last_move_time = pygame.time.get_ticks()
+        self.slow_end_time = 0
+
+    def apply_slow(self, factor: float, duration_ms: int):
+        now = pygame.time.get_ticks()
+        self.speed = self.base_speed * factor
+        self.slow_end_time = now + duration_ms
+
+    def update_slow(self):
+        if pygame.time.get_ticks() >= self.slow_end_time:
+            self.speed = self.base_speed
 
     def attack_tower(self, tower):
         tower.currentHealth -= self.damage
 
-    def die(self, board=None):
-        
+    def die(self, board = None):
         return None
 
-    def take_damage(self, damage: int, board=None):
+    def take_damage(self, damage: int, board = None):
         self.currentHealth -= damage
 
 class Goblin(Enemy):
@@ -36,6 +50,11 @@ class Goblin(Enemy):
         self.attackRange = 1
         self.currency = 10
         self.sprite = "assets/goblin1.png"
+        self.slowed = False
+        self.base_speed = 1.0
+        self.speed = self.base_speed
+        self.last_move_time = pygame.time.get_ticks()
+        self.slow_end_time = 0
 
 
 
@@ -51,6 +70,11 @@ class Skeleton(Enemy):
         self.sprite = "assets/skeleton.png"
         self.row = 0
         self.col = 0
+        self.slowed = False
+        self.base_speed = 1.0
+        self.speed = self.base_speed
+        self.last_move_time = pygame.time.get_ticks()
+        self.slow_end_time = 0
     
     
 class Witch(Enemy):
@@ -65,6 +89,11 @@ class Witch(Enemy):
         self.sprite = "assets/witch.png"
         self.row = 0
         self.col = 0
+        self.slowed = False
+        self.base_speed = 1.0
+        self.speed = self.base_speed
+        self.last_move_time = pygame.time.get_ticks()
+        self.slow_end_time = 0
 
     def track_position(self, pos):
         self.row = pos[0]
@@ -85,6 +114,11 @@ class Giant_Skeleton(Enemy):
         self.currency = 1000
         self.sprite = "assets/giant_skeleton.png"
         self.row = 0
+        self.slowed = False
+        self.base_speed = 1.0
+        self.speed = self.base_speed
+        self.last_move_time = pygame.time.get_ticks()
+        self.slow_end_time = 0
 
     def place_bomb(self):
         pass
@@ -101,6 +135,11 @@ class Bat(Enemy):
         self.sprite = "assets/bat.png"
         self.row = 0
         self.col = 0
+        self.slowed = False
+        self.base_speed = 1.0
+        self.speed = self.base_speed
+        self.last_move_time = pygame.time.get_ticks()
+        self.slow_end_time = 0
 
 class Bandit(Enemy):
     def __init__(self):
@@ -114,6 +153,11 @@ class Bandit(Enemy):
         self.sprite = "assets/bandit.png"
         self.row = 0
         self.col = 0
+        self.slowed = False
+        self.base_speed = 1.0
+        self.speed = self.base_speed
+        self.last_move_time = pygame.time.get_ticks()
+        self.slow_end_time = 0
 
     def take_damage(self, damage: int, board): # teleports bandit if it takes damage
         self.currentHealth -= damage
@@ -145,6 +189,11 @@ class Necromancer(Enemy):
         self.sprite = "assets/necromancer.png"
         self.row = 0
         self.col = 0
+        self.slowed = False
+        self.base_speed = 1.0
+        self.speed = self.base_speed
+        self.last_move_time = pygame.time.get_ticks()
+        self.slow_end_time = 0
 
     def die(self, board=None):
         return [Skeleton(), Skeleton()]
@@ -162,6 +211,11 @@ class Slime(Enemy):
         self.sprite = "assets/slime.png"
         self.row = 0
         self.col = 0
+        self.slowed = False
+        self.base_speed = 1.0
+        self.speed = self.base_speed
+        self.last_move_time = pygame.time.get_ticks()
+        self.slow_end_time = 0
 
     def die(self, board=None):
         return [Slimelet(), Slimelet()]
@@ -178,6 +232,11 @@ class Slimelet(Enemy):
         self.sprite = "assets/slimelet.png"
         self.row = 0
         self.col = 0
+        self.slowed = False
+        self.base_speed = 1.0
+        self.speed = self.base_speed
+        self.last_move_time = pygame.time.get_ticks()
+        self.slow_end_time = 0
 
 
 class FireImp(Enemy):
@@ -192,6 +251,11 @@ class FireImp(Enemy):
         self.sprite = "assets/fire_spirit.png"
         self.row = 0
         self.col = 0
+        self.slowed = False
+        self.base_speed = 1.0
+        self.speed = self.base_speed
+        self.last_move_time = pygame.time.get_ticks()
+        self.slow_end_time = 0
 
     def die(self, board=None):
         if board:
