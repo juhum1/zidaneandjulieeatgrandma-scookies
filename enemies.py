@@ -73,6 +73,22 @@ class Witch(Enemy):
     def die(self, board=None):
         return Skeleton()
 
+
+class Giant_Skeleton(Enemy):
+    def __init__(self):
+        self.maxHealth = 5000
+        self.currentHealth = self.maxHealth
+        self.damage = 100
+        self.speed = 1
+        self.attackSpeed = 1
+        self.attackRange = 1
+        self.currency = 1000
+        self.sprite = "assets/giant_skeleton.png"
+        self.row = 0
+
+    def place_bomb(self):
+        pass
+
 class Bat(Enemy):
     def __init__(self):
         self.maxHealth = 10

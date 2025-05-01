@@ -45,8 +45,9 @@ class Board:
                         self.array[i][j].item = None
                         enemy.row = next_row
                         enemy.col = j
-                    elif isinstance(self.array[next_row + enemy.attackRange - 1][j].item, towers.Tower):
-                        enemy.attack_tower(self.array[next_row + enemy.attackRange - 1][j].item)
+                    elif (next_row + enemy.attackRange - 1) < self.rows:
+                        if isinstance(self.array[next_row + enemy.attackRange - 1][j].item, towers.Tower):
+                            enemy.attack_tower(self.array[next_row + enemy.attackRange - 1][j].item)
                     elif isinstance(self.array[next_row][j].item, enemies.Enemy):
                         pass  
         return damage       
@@ -72,10 +73,16 @@ class Board:
                             enemy = self.array[k][j].item
                             if enemy is not None and isinstance(enemy, enemies.Enemy):
                                 if enemy.currentHealth > 0:
+                                    new_projectile = projectile.Projectile(
+                                        start_pos = (j * self.tile_size, i * self.tile_size), 
+                                        target = enemy,
+                                        damage = tower.damage,
+                                        range = tower.range,
+                                        target_y = k * self.tile_size  # enemy's row → Y
+                                    )
+                                    self.projectiles.append(new_projectile)
                                     tower.shoot(enemy, self, i, j, k)
                                     break
-
-
 
 
     def death(self):

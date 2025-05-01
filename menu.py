@@ -112,7 +112,7 @@ class Menu:
             return False
         col = x_pos // board.tile_size
         row = y_pos // board.tile_size
-        if 0 <= col < board.cols and 0 <= row < board.rows and board.array[row][col].item is None:
+        if 0 <= col < board.cols and 3 <= row < board.rows and board.array[row][col].item is None:
             board.array[row][col].item = self.selected_tower
             self.currency -= self.selected_tower.price
             self.selected_tower = None
@@ -162,6 +162,17 @@ class Menu:
             print("Game Over!")
             return False
         return True
+
+    def quit(self, x_pos, y_pos):
+        if self.width/2 - 110 <= x_pos <= self.width/2 - 40 and self.height/2 + 30 <= y_pos <= self.height/2 + 60:
+            return True
+        return False
+
+    def play_again(self, x_pos, y_pos):
+        if self.width/2 + 40 <= x_pos <= self.width/2 + 100 and self.height/2 + 30 <= y_pos <= self.height/2 + 60:
+            return True 
+        return False
+
 
     if __name__ == "__main__":
         print("This is a menu module. It should not be run directly.")
