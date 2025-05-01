@@ -13,6 +13,7 @@ class Menu:
             {"name": "Basic Tower", "price": towers.Classic.get_price(), "image": pygame.image.load("assets/wizard.png"), "selected": False},
             {"name": "Fast Tower", "price": towers.Fast.get_price(), "image": pygame.image.load(towers.Fast.get_sprite_path()), "selected": False},
             {"name": "Heavy Tower", "price": towers.Heavy.get_price(), "image": pygame.image.load(towers.Heavy.get_sprite_path()), "selected": False},
+            {"name": "Princess Tower", "price": towers.Princess.get_price(), "image": pygame.image.load(towers.Princess.get_sprite_path()), "selected": False},
 
         ]
         self.selected_tower = None
@@ -94,7 +95,8 @@ class Menu:
                             self.selected_tower = towers.Fast()
                         case "Heavy Tower":
                             self.selected_tower = towers.Heavy()
-
+                        case "Princess Tower":
+                            self.selected_tower = towers.Princess()
 
                     return tower
 
@@ -131,7 +133,6 @@ class Menu:
         col = x_pos // board.tile_size
         row = y_pos // board.tile_size
         if 0 <= col < board.cols and 0 <= row < board.rows and isinstance(board.array[row][col].item, towers.Tower):
-            # bug: return_currency returns +1 value
             return_percent = 50 
             match tower := board.array[row][col].item:
                 case towers.Classic():
@@ -139,6 +140,8 @@ class Menu:
                 case towers.Fast():
                     return_currency = (tower.price * return_percent) // 100
                 case towers.Heavy():
+                    return_currency = (tower.price * return_percent) // 100
+                case towers.Princess():
                     return_currency = (tower.price * return_percent) // 100
             board.array[row][col].item = None
             self.update_currency(return_currency)
