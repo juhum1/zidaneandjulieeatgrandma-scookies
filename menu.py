@@ -43,7 +43,7 @@ class Menu:
         
         self.screen.blit(pygame.image.load("assets/bomb.png"), (self.x_offset + 350, 625))
         if self.remove_clicked:
-            pygame.draw.rect(self.screen, (255, 0, 0), (self.x_offset + 350, y_pos + 425, 60, 60), 4)
+            pygame.draw.rect(self.screen, (255, 0, 0), (self.x_offset + 350, 625, 60, 60), 4)
 
         font = pygame.font.Font(None, 36)
         currency_text = font.render(f"Currency: ${self.currency}", True, (255, 255, 255))
@@ -131,9 +131,7 @@ class Menu:
             self.remove_clicked = not self.remove_clicked
             for tower in self.tower_options:
                 tower["selected"] = False
-        
             return True
-
         return False
 
     def remove_tower(self, board, x_pos, y_pos): # removes tower if remove_clicked is True
@@ -149,6 +147,8 @@ class Menu:
                 case towers.Heavy():
                     return_currency = (tower.price * return_percent) // 100
                 case towers.Princess():
+                    return_currency = (tower.price * return_percent) // 100
+                case towers.Slowing():
                     return_currency = (tower.price * return_percent) // 100
             board.array[row][col].item = None
             self.update_currency(return_currency)
