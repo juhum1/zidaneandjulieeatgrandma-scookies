@@ -31,8 +31,6 @@ class Tower(ABC):
     def attack_enemy(self, enemy):
         if self.can_attack():
 
-
-
             if enemy.currentHealth > 0:
                 enemy.currentHealth -= self.damage
                 self.lastAttackTime = pygame.time.get_ticks()
@@ -52,7 +50,6 @@ class Tower(ABC):
 
 class Classic(Tower):
     def __init__(self):
-        print(f"Initializing tower: {self.__class__.__name__}")
 
         self.maxHealth = 150
         self.lastAttackTime = 0 
@@ -75,8 +72,6 @@ class Classic(Tower):
 
 class Fast(Tower):
     def __init__(self):
-        print(f"Initializing tower: {self.__class__.__name__}")
-
         self.maxHealth = 100
         self.lastAttackTime = 0 
         self.currentHealth = self.maxHealth
