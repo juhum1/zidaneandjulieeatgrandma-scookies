@@ -16,12 +16,12 @@ Input:
 
 Output:
 
-* Terminal-based visual representation of the game.
+* GUI-based visual representation of the game.
 
 * Display of player stats (health, money, wave).
 
 ### Be very specific as to what you want to build for your final project.
-A terminal-based game where the player defends against multiple waves of incoming enemies by strategically placing towers. The goal is to prevent enemies from reaching the bottom of the terminal. As they do, player health decreases and the player loses if they get to 0 health, or wins if they reach a certain wave. 
+A GUI-based game where the player defends against multiple waves of incoming enemies by strategically placing towers. The goal is to prevent enemies from reaching the bottom of the terminal. As they do, player health decreases and the player loses if they get to 0 health, or wins if they reach a certain wave. 
 
 Towers have different stats, and as the game goes on enemies will spawn faster and faster.
 
