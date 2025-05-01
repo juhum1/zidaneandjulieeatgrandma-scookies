@@ -2,6 +2,12 @@
 python3 game.py
 
 MAKE SURE TO INSTALL PYGAME
+sudo apt-get install python-pygame or
+
+sudo apt install python3-pip python3-dev -y
+pip3 install pygame
+
+
 ## Sources
 https://github.com/smlbiobot/cr-assets-png/blob/master/assets/sc/building_tower_tex.png
 
