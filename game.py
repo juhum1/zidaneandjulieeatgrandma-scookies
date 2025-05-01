@@ -37,9 +37,7 @@ paused_start_time = 0
 paused_total_time = 0
 remove = False
 
-#enemies_arr = [enemies.Goblin, enemies.Skeleton, enemies.Witch, enemies.Necromancer, enemies.Bat, enemies.Ogre, enemies.Bandit, enemies.Slime]
-enemies_arr = [enemies.FireImp, enemies.FireImp, enemies.FireImp, enemies.FireImp, enemies.FireImp, enemies.FireImp, enemies.FireImp]         
-
+enemies_arr = [enemies.Goblin, enemies.Skeleton, enemies.Witch, enemies.Necromancer, enemies.Bat, enemies.Slime, enemies.Bandit, enemies.FireImp]
 
 
 pygame.mixer.init()
