@@ -53,8 +53,8 @@ def handle_wave(wave_num, game_board, menu, cur_time, tile_size, enemy_spawned_t
     enemies_to_spawn = 10 + 5 * (wave_num - 1)
     move_rate = max(400, 1000 - 100 * (wave_num - 1))
     spawn_rate = max(500, 2000 - 100 * (wave_num - 1))
-
     game_board.tower_attack()
+    move_rate = max(400, 1500 - 100 * (wave_num - 1))
 
     if cur_time - enemy_moved_time >= move_rate:
         wave_cleared = menu.update_health(game_board.move_enemies(game_board))
