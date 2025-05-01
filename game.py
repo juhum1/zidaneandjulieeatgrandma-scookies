@@ -7,6 +7,7 @@ import menu
 import random
 import start_screen
 import projectile
+import faulthandler; faulthandler.enable()
 
 pygame.mixer.pre_init(44100, -16, 2, 4096)
 pygame.init()
@@ -61,12 +62,13 @@ def handle_wave(wave_num, game_board, menu, cur_time, tile_size, enemy_spawned_t
     
     if cur_time - enemy_spawned_time >= spawn_rate:
         if enemies_spawned < enemies_to_spawn:
-            if (wave_num // 2 + 1 <= len(enemies_arr) - 1):
+            if wave_num < 4:
                 game_board.add_enemy(
-                    enemies_arr[random.randint(0, wave_num // 2 + 1)](),
+                    enemies_arr[random.randint(0, 3)](),
                     0,
                     random.randint(0, game_board.cols - 1)
                 )
+
             else:
                 game_board.add_enemy(
                     enemies_arr[random.randint(0, len(enemies_arr) - 1)](),

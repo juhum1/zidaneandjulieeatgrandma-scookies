@@ -10,9 +10,9 @@ class Menu:
         self.height = height
         self.currency = currency
         self.tower_options = [
-            {"name": "Basic Tower", "price": towers.Classic().price, "image": pygame.image.load("assets/wizard.png"), "selected": False},
-            {"name": "Fast Tower", "price": towers.Fast().price, "image": pygame.image.load(towers.Fast().sprite), "selected": False},
-            {"name": "Heavy Tower", "price": towers.Heavy().price, "image": pygame.image.load(towers.Heavy().sprite), "selected": False},
+            {"name": "Basic Tower", "price": towers.Classic.get_price(), "image": pygame.image.load("assets/wizard.png"), "selected": False},
+            {"name": "Fast Tower", "price": towers.Fast.get_price(), "image": pygame.image.load(towers.Fast.get_sprite_path()), "selected": False},
+            {"name": "Heavy Tower", "price": towers.Heavy.get_price(), "image": pygame.image.load(towers.Heavy.get_sprite_path()), "selected": False},
 
         ]
         self.selected_tower = None

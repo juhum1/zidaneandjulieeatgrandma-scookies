@@ -16,8 +16,8 @@ def scale_image(img):
 
 class Tower(ABC):
     def __init__(self):
-        self.currentHealth = self.maxHealth
         self.maxHealth = None
+        self.currentHealth = self.maxHealth
         self.damage = 50
         self.attackSpeed = 1
         self.range = 1
@@ -52,6 +52,8 @@ class Tower(ABC):
 
 class Classic(Tower):
     def __init__(self):
+        print(f"Initializing tower: {self.__class__.__name__}")
+
         self.maxHealth = 150
         self.lastAttackTime = 0 
         self.currentHealth = self.maxHealth 
@@ -62,9 +64,19 @@ class Classic(Tower):
         self.price = 100
         self.sprite_surface = scale_image(pygame.image.load(self.sprite).convert_alpha())
 
+    @staticmethod
+    def get_price():
+        return 100
+
+    @staticmethod
+    def get_sprite_path():
+        return "assets/wizard_back.png"
+
 
 class Fast(Tower):
     def __init__(self):
+        print(f"Initializing tower: {self.__class__.__name__}")
+
         self.maxHealth = 100
         self.lastAttackTime = 0 
         self.currentHealth = self.maxHealth
@@ -75,6 +87,13 @@ class Fast(Tower):
         self.price = 150
         self.sprite_surface = scale_image(pygame.image.load(self.sprite).convert_alpha())
 
+    @staticmethod
+    def get_price():
+        return 150
+
+    @staticmethod
+    def get_sprite_path():
+        return "assets/tower.png"
 
 class Heavy(Tower):
     def __init__(self):
@@ -87,3 +106,11 @@ class Heavy(Tower):
         self.attackSpeed = 0.5
         self.price = 150
         self.sprite_surface = scale_image(pygame.image.load(self.sprite).convert_alpha())
+
+    @staticmethod
+    def get_price():
+        return 150
+
+    @staticmethod
+    def get_sprite_path():
+        return "assets/tower.png"
