@@ -147,7 +147,7 @@ class Menu:
                     return_currency = (tower.price * return_percent) // 100
                 case towers.Princess():
                     return_currency = (tower.price * return_percent) // 100
-                case towers.Slowing():
+                case towers.Bomb():
                     return_currency = (tower.price * return_percent) // 100
             board.array[row][col].item = None
             self.update_currency(return_currency)
