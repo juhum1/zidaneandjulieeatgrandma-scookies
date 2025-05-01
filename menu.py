@@ -47,14 +47,14 @@ class Menu:
 
         font = pygame.font.Font(None, 36)
         currency_text = font.render(f"Currency: ${self.currency}", True, (255, 255, 255))
-        self.screen.blit(currency_text, (self.x_offset + 100, y_pos + 450))
-        pygame.draw.rect(self.screen, (255, 0, 0), (self.x_offset + 100, y_pos + 490, 200, 20))
-        pygame.draw.rect(self.screen, (0, 255, 0), (self.x_offset + 100, y_pos + 490, 200 * (self.health / 500), 20))
+        self.screen.blit(currency_text, (self.x_offset + 100, y_pos + 250))
+        pygame.draw.rect(self.screen, (255, 0, 0), (self.x_offset + 100, y_pos + 290, 200, 20))
+        pygame.draw.rect(self.screen, (0, 255, 0), (self.x_offset + 100, y_pos + 290, 200 * (self.health / 500), 20))
         font = pygame.font.Font(None, 24)
 
         # draw wave
         wave_text = font.render(f"Wave: {self.wave}", True, (255, 255, 255))
-        self.screen.blit(wave_text, (self.x_offset + 100, y_pos + 520))
+        self.screen.blit(wave_text, (self.x_offset + 100, y_pos + 320))
         
 
     def click_menu_bar(self, x_pos, y_pos):
