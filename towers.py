@@ -108,7 +108,7 @@ class Heavy(Tower):
 
     @staticmethod
     def get_sprite_path():
-        return "assets/tower.png"
+        return "assets/heavy.png"
 
 class Princess(Tower):
     def __init__(self):
@@ -120,7 +120,6 @@ class Princess(Tower):
         self.range = 6
         self.attackSpeed = 0.2
         self.price = 250
-        return "assets/heavy.png"
 
     @staticmethod
     def get_price():
