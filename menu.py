@@ -15,7 +15,6 @@ class Menu:
             {"name": "Heavy Tower", "price": towers.Heavy.get_price(), "image": pygame.image.load(towers.Heavy.get_sprite_path()), "selected": False},
             {"name": "Princess Tower", "price": towers.Princess.get_price(), "image": pygame.image.load(towers.Princess.get_sprite_path()), "selected": False},
             {"name": "Bomb Tower", "price": towers.Bomb.get_price(), "image": pygame.image.load(towers.Bomb.get_sprite_path()), "selected": False}
-
             ]
 
         self.selected_tower = None
@@ -162,7 +161,6 @@ class Menu:
     def update_health(self, health):
         self.health -= health
         if self.health <= 0:
-            print("Game Over!")
             return False
         return True
 
@@ -195,9 +193,6 @@ class Menu:
                 return True
         self.tower_clicked = None
         return False
-
-
-
 
     def show_tower_health(self, board, x_pos, y_pos):
         if self.tower_clicked is not None:

@@ -13,8 +13,6 @@ class Projectile:
         self.speed = speed
         self.sprite = pygame.image.load(sprite_path).convert_alpha()
         self.alive = True
-        self.slow_factor = slow_factor
-        self.slow_duration = slow_duration
 
         distance = target_y - self.y
         if distance == 0:

@@ -3,13 +3,7 @@ class Tile:
     def __init__(self, width, height, image="grass"):
         self.width = width
         self.height = height
-        match image:
-            case "grass":
-                self.image = pygame.image.load("assets/grass_tile.png")
-            case _:
-                self.image = pygame.image.load("assets/grass_tile.png")
-
-
+        self.image = pygame.image.load(f"assets/{image}.png").convert_alpha()
         self.item = None  
     
 

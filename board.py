@@ -32,7 +32,7 @@ class Board:
             enemy.col = col
             self.array[row][col].item = enemy
 
-    def move_enemies(self, board):
+    def move_enemies(self):
         # moves enemies down the board and checks for damage
         damage = 0
         now = pygame.time.get_ticks()
@@ -41,7 +41,6 @@ class Board:
                 enemy = self.array[i][j].item
                 if enemy is not None and isinstance(enemy, enemies.Enemy):
                     next_row = i + 1
-                    enemy.update_slow()
                     interval = 1000 / enemy.speed
                     if now - enemy.last_move_time < interval:
                         continue

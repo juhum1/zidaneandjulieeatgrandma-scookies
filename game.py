@@ -7,7 +7,6 @@ from menu import Menu
 import random
 import start_screen
 import projectile
-import faulthandler; faulthandler.enable()
 
 pygame.mixer.pre_init(44100, -16, 2, 4096)
 pygame.init()
@@ -47,7 +46,6 @@ pygame.mixer.music.load("assets/pvz.wav")
 pygame.mixer.music.set_volume(0.5)
 wave_sfx = pygame.mixer.Sound("assets/wave.mp3")
 wave_sfx.set_volume(0.5)
-#pygame.mixer.music.play(-1)
 
 
 def handle_wave(wave_num, game_board, menu, cur_time, tile_size, enemy_spawned_time, enemy_moved_time, tower_attack_time, enemies_spawned, wave_begin_time, wave_cleared):
@@ -57,7 +55,7 @@ def handle_wave(wave_num, game_board, menu, cur_time, tile_size, enemy_spawned_t
     game_board.tower_attack()
 
     if cur_time - enemy_moved_time >= move_rate:
-        wave_cleared = menu.update_health(game_board.move_enemies(game_board))
+        wave_cleared = menu.update_health(game_board.move_enemies())
         enemy_moved_time = cur_time
     
     if cur_time - enemy_spawned_time >= spawn_rate:
@@ -120,7 +118,7 @@ while running:
                 menu = Menu(screen, board_cols * tile_size, width, height, 500) # new menu
 
 
-            if menu.click_tower(event.pos[0], event.pos[1], game_board):
+            if menu.click_tower(event.pos[0], event.pos[1], game_board): # necessary to trigger tower health check
                 pass
 
 

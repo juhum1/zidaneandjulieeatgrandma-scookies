@@ -16,20 +16,8 @@ class Enemy(ABC):
         self.sprite = None
         self.row = 0
         self.col = 0
-        self.slowed = False
-        self.base_speed = 1.0
-        self.speed = self.base_speed
         self.last_move_time = pygame.time.get_ticks()
-        self.slow_end_time = 0
 
-    def apply_slow(self, factor: float, duration_ms: int):
-        now = pygame.time.get_ticks()
-        self.speed = self.base_speed * factor
-        self.slow_end_time = now + duration_ms
-
-    def update_slow(self):
-        if pygame.time.get_ticks() >= self.slow_end_time:
-            self.speed = self.base_speed
 
     def attack_tower(self, tower):
         tower.currentHealth -= self.damage
@@ -42,6 +30,7 @@ class Enemy(ABC):
 
 class Goblin(Enemy):
     def __init__(self):
+        super().__init__()
         self.maxHealth = 80 
         self.currentHealth = self.maxHealth
         self.damage = 40
@@ -50,16 +39,11 @@ class Goblin(Enemy):
         self.attackRange = 1
         self.currency = 10
         self.sprite = "assets/goblin1.png"
-        self.slowed = False
-        self.base_speed = 1.0
-        self.speed = self.base_speed
-        self.last_move_time = pygame.time.get_ticks()
-        self.slow_end_time = 0
-
 
 
 class Skeleton(Enemy):
     def __init__(self):
+        super().__init__()
         self.maxHealth = 20 
         self.currentHealth = self.maxHealth
         self.damage = 50
@@ -68,17 +52,10 @@ class Skeleton(Enemy):
         self.attackRange = 1
         self.currency = 5
         self.sprite = "assets/skeleton.png"
-        self.row = 0
-        self.col = 0
-        self.slowed = False
-        self.base_speed = 1.0
-        self.speed = self.base_speed
-        self.last_move_time = pygame.time.get_ticks()
-        self.slow_end_time = 0
-    
-    
+
 class Witch(Enemy):
     def __init__(self):
+        super().__init__()
         self.maxHealth = 150
         self.currentHealth = self.maxHealth
         self.damage = 70
@@ -87,13 +64,7 @@ class Witch(Enemy):
         self.attackRange = 3
         self.currency = 10
         self.sprite = "assets/witch.png"
-        self.row = 0
-        self.col = 0
-        self.slowed = False
-        self.base_speed = 1.0
-        self.speed = self.base_speed
-        self.last_move_time = pygame.time.get_ticks()
-        self.slow_end_time = 0
+
 
     def track_position(self, pos):
         self.row = pos[0]
@@ -102,29 +73,9 @@ class Witch(Enemy):
     def die(self, board=None):
         return Skeleton()
 
-
-class Giant_Skeleton(Enemy):
-    def __init__(self):
-        self.maxHealth = 5000
-        self.currentHealth = self.maxHealth
-        self.damage = 100
-        self.speed = 1
-        self.attackSpeed = 1
-        self.attackRange = 1
-        self.currency = 1000
-        self.sprite = "assets/giant_skeleton.png"
-        self.row = 0
-        self.slowed = False
-        self.base_speed = 1.0
-        self.speed = self.base_speed
-        self.last_move_time = pygame.time.get_ticks()
-        self.slow_end_time = 0
-
-    def place_bomb(self):
-        pass
-
 class Bat(Enemy):
     def __init__(self):
+        super().__init__()
         self.maxHealth = 10
         self.currentHealth = self.maxHealth
         self.damage = 50
@@ -133,16 +84,10 @@ class Bat(Enemy):
         self.attackRange = 1
         self.currency = 2
         self.sprite = "assets/bat.png"
-        self.row = 0
-        self.col = 0
-        self.slowed = False
-        self.base_speed = 1.0
-        self.speed = self.base_speed
-        self.last_move_time = pygame.time.get_ticks()
-        self.slow_end_time = 0
 
 class Bandit(Enemy):
     def __init__(self):
+        super().__init__()
         self.maxHealth = 160
         self.currentHealth = self.maxHealth
         self.damage = 30
@@ -151,13 +96,7 @@ class Bandit(Enemy):
         self.attackRange = 1
         self.currency = 8
         self.sprite = "assets/bandit.png"
-        self.row = 0
-        self.col = 0
-        self.slowed = False
-        self.base_speed = 1.0
-        self.speed = self.base_speed
-        self.last_move_time = pygame.time.get_ticks()
-        self.slow_end_time = 0
+
 
     def take_damage(self, damage: int, board): # teleports bandit if it takes damage
         self.currentHealth -= damage
@@ -179,6 +118,7 @@ class Bandit(Enemy):
 
 class Necromancer(Enemy):
     def __init__(self):
+        super().__init__()
         self.maxHealth = 100
         self.currentHealth = self.maxHealth
         self.damage = 20
@@ -187,13 +127,6 @@ class Necromancer(Enemy):
         self.attackRange = 4
         self.currency = 15
         self.sprite = "assets/necromancer.png"
-        self.row = 0
-        self.col = 0
-        self.slowed = False
-        self.base_speed = 1.0
-        self.speed = self.base_speed
-        self.last_move_time = pygame.time.get_ticks()
-        self.slow_end_time = 0
 
     def die(self, board=None):
         return [Skeleton(), Skeleton()]
@@ -201,6 +134,7 @@ class Necromancer(Enemy):
 
 class Slime(Enemy):
     def __init__(self):
+        super().__init__()
         self.maxHealth = 40
         self.currentHealth = self.maxHealth
         self.damage = 25
@@ -209,19 +143,14 @@ class Slime(Enemy):
         self.attackRange = 1
         self.currency = 3
         self.sprite = "assets/slime.png"
-        self.row = 0
-        self.col = 0
-        self.slowed = False
-        self.base_speed = 1.0
-        self.speed = self.base_speed
-        self.last_move_time = pygame.time.get_ticks()
-        self.slow_end_time = 0
+
 
     def die(self, board=None):
         return [Slimelet(), Slimelet()]
 
 class Slimelet(Enemy):
     def __init__(self):
+        super().__init__()
         self.maxHealth = 10
         self.currentHealth = self.maxHealth
         self.damage = 10
@@ -230,17 +159,11 @@ class Slimelet(Enemy):
         self.attackRange = 1
         self.currency = 1
         self.sprite = "assets/slimelet.png"
-        self.row = 0
-        self.col = 0
-        self.slowed = False
-        self.base_speed = 1.0
-        self.speed = self.base_speed
-        self.last_move_time = pygame.time.get_ticks()
-        self.slow_end_time = 0
 
 
 class FireImp(Enemy):
     def __init__(self):
+        super().__init__()
         self.maxHealth = 50
         self.currentHealth = self.maxHealth
         self.damage = 35
@@ -249,19 +172,14 @@ class FireImp(Enemy):
         self.attackRange = 2
         self.currency = 12
         self.sprite = "assets/fire_spirit.png"
-        self.row = 0
-        self.col = 0
-        self.slowed = False
-        self.base_speed = 1.0
-        self.speed = self.base_speed
-        self.last_move_time = pygame.time.get_ticks()
-        self.slow_end_time = 0
+
+
 
     def die(self, board=None):
         if board:
             next_row = self.row + 1
             tower = board.array[next_row][self.col].item if next_row < board.rows else None
             if tower and isinstance(tower, towers.Tower):
-                board.array[next_row][self.col].item = None  
+                board.array[next_row][self.col].item = None  # explodes tower
             
         return None
