@@ -2,8 +2,8 @@ import pygame
 import math
 
 class Projectile:
+    """Creates a projectile that moves towards a target."""
     def __init__(self, target_y, start_pos, target, damage, speed=100, range=1, sprite_path="assets/fireball.png", board=None, slow_factor: float = None, slow_duration: int = 0):
-
         self.x, self.y = start_pos
         self.start_y = start_pos[1]
         self.target_y = target_y

@@ -5,6 +5,7 @@ import towers
 import pygame
 
 class Enemy(ABC):
+    """Abstract base class for all enemies."""
     def __init__(self):
         self.maxHealth = 1
         self.currentHealth = self.maxHealth

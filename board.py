@@ -5,6 +5,7 @@ import enemies
 import projectile
 
 class Board:
+    """Class representing the game board for the tower defense game. Stores tiles, which in turn can store enemies and towers."""
     def __init__(self, cols, rows, tile_size):
         self.rows = rows
         self.cols = cols

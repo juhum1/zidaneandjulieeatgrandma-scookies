@@ -1,5 +1,5 @@
 import pygame
-class Tile:
+class Tile: # Grid class for the game board
     def __init__(self, width, height, image="grass"):
         self.width = width
         self.height = height

@@ -15,7 +15,7 @@ class Menu:
             {"name": "Heavy Tower", "price": towers.Heavy.get_price(), "image": pygame.image.load(towers.Heavy.get_sprite_path()), "selected": False},
             {"name": "Princess Tower", "price": towers.Princess.get_price(), "image": pygame.image.load(towers.Princess.get_sprite_path()), "selected": False},
             {"name": "Bomb Tower", "price": towers.Bomb.get_price(), "image": pygame.image.load(towers.Bomb.get_sprite_path()), "selected": False}
-            ]
+            ] # list of tower options with their properties
 
         self.selected_tower = None
         self.health = 500  
@@ -194,7 +194,8 @@ class Menu:
         self.tower_clicked = None
         return False
 
-    def show_tower_health(self, board, x_pos, y_pos):
+    def show_tower_health(self, board, x_pos, y_pos): 
+        """Function to display the health bar of the selected tower."""
         if self.tower_clicked is not None:
             row, col = self.tower_clicked
             if 0 <= col < board.cols and 0 <= row < board.rows:

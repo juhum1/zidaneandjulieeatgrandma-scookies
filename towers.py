@@ -4,19 +4,21 @@ import enemies
 import projectile
 
 def scale_image(img):
-        rect = img.get_bounding_rect()
-        scale_imageped = img.subsurface(rect).copy()
-        scale_factor = min(80 / rect.width, 80 / rect.height)
-        new_size = (int(rect.width * scale_factor), int(rect.height * scale_factor))
-        scaled = pygame.transform.smoothscale(scale_imageped, new_size)
-        centered = pygame.Surface((80, 80), pygame.SRCALPHA)
-        offset_x = (80 - new_size[0]) // 2
-        offset_y = (80 - new_size[1]) // 2
-        centered.blit(scaled, (offset_x, offset_y))
-        return centered
+    """Scales all tower images to fit within a 80x80 pixel square while maintaining aspect ratio."""
+    rect = img.get_bounding_rect()
+    scale_imageped = img.subsurface(rect).copy()
+    scale_factor = min(80 / rect.width, 80 / rect.height)
+    new_size = (int(rect.width * scale_factor), int(rect.height * scale_factor))
+    scaled = pygame.transform.smoothscale(scale_imageped, new_size)
+    centered = pygame.Surface((80, 80), pygame.SRCALPHA)
+    offset_x = (80 - new_size[0]) // 2
+    offset_y = (80 - new_size[1]) // 2
+    centered.blit(scaled, (offset_x, offset_y))
+    return centered
 
 
 class Tower(ABC):
+    """Abstract base class for all towers."""
     def __init__(self):
         self.maxHealth = None
         self.currentHealth = self.maxHealth
