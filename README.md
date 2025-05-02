@@ -9,7 +9,7 @@ pip3 install pygame
 
 
 ## Sources
-https://github.com/smlbiobot/cr-assets-png/blob/master/assets/sc/building_tower_tex.png
+https://github.com/smlbiobot/cr-assets-png/blob/master/assets/
 
 # Proposal
 ## Tower Defense Simulator
