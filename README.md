@@ -1,15 +1,20 @@
 # Compilation Steps
 **MAKE SURE TO INSTALL PYGAME**
-    sudo apt-get install python-pygame 
+</br>
+```sudo apt-get install python-pygame```
+</br>
 or
-    sudo apt install python3-pip python3-dev -y
-    pip3 install pygame
+</br>
+```sudo apt install python3-pip python3-dev -y```
+</br>
+```pip3 install pygame```
 
 then run:
-    python3 game.py
+</br>
+```python3 game.py```
 
 ## Sources
-https://github.com/smlbiobot/cr-assets-png/blob/master/assets/
+[**Assets**](https://github.com/smlbiobot/cr-assets-png/blob/master/assets/)
 
 # Proposal
 ## Tower Defense Simulator
@@ -53,11 +58,12 @@ The game is very tower-defense esque, running until the player runs out of healt
 from killing enemies. Each tower has its own health
 
 ## Mechanics
-To start the game, press Start😀! Then, with an initial $500, place towers by clicking them and then clicking the tile you wish to place them on. You cannot fill a tile with an existing tower or current enemy. In order to get past this, use the remove tool to click on a tower and remove it. 
-You will get some percentage of currency back (not the entire amount).
+To start the game, press ```Start```! Then, with an initial $500, place towers by clicking them and then clicking the tile you wish to place them on. You cannot fill a tile with an existing tower or current enemy. In order to get past this, use the remove tool to click on a tower and remove it. You will get some percentage of currency back.
 
 Each tower has its own health and can be destroyed by enemies.
 Enemies spawn in waves, making their way towards the bottom. If they reach it, you lose health.
+
+Upon reaching 0 health, you can play again or quit. There is no restarting a wave; if you would like to reset the game early, you can restart the entire game by clicking the menu and then restart button.
 
 ## Gameplay
 
