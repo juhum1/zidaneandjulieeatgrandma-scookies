@@ -1,12 +1,12 @@
-## Compilation Steps
-python3 game.py
+# Compilation Steps
+**MAKE SURE TO INSTALL PYGAME**
+    sudo apt-get install python-pygame 
+or
+    sudo apt install python3-pip python3-dev -y
+    pip3 install pygame
 
-MAKE SURE TO INSTALL PYGAME
-sudo apt-get install python-pygame or
-
-sudo apt install python3-pip python3-dev -y
-pip3 install pygame
-
+then run:
+    python3 game.py
 
 ## Sources
 https://github.com/smlbiobot/cr-assets-png/blob/master/assets/
@@ -61,25 +61,24 @@ Enemies spawn in waves, making their way towards the bottom. If they reach it, y
 
 ## Gameplay
 
-Each tower and enemy has its own unique stats. Here are them all listed
+Each tower and enemy has its own unique stats.
 
-| Name             | Health | Damage | Range | Attack Speed | Price | Special |
-|------------------|--------|--------|--------|----------------|--------|---------|
-| **Classic**       | 150    | 40     | 2      | 1 attack/sec   | $100   |  starter tower |
-| **Fast**          | 100    | 40     | 2      | 3 attacks/sec  | $150   | High fire rate  |
-| **Heavy**         | 300    | 100    | 3      | 0.5 attacks/sec| $150   | Tanky and hard-hitting |
-| **Princess**      | 75     | 300    | 6      | 0.2 attacks/sec| $250   | High range and damge |
-| **Slowing**       | 150    | 100    | 3      | 0.5 attacks/sec| $200   | Intended for slow effects|
-| **Bomb**          | 150    | 75     | 2      | 0.8 attacks/sec| $200   | Hits 3 enemies in a row|
+| Name             | Health | Damage | Range  | Attack Speed   | Price  | Special                                       |
+|------------------|--------|--------|--------|----------------|--------|-----------------------------------------------|
+| **Classic**      | 150    | 40     | 2      | 1 attack/sec   | $100   | Starter tower                                 |
+| **Fast**         | 100    | 40     | 2      | 3 attacks/sec  | $150   | High fire rate                                |
+| **Heavy**        | 300    | 100    | 3      | 0.5 attacks/sec| $150   | Tanky and hard-hitting                        |
+| **Princess**     | 75     | 300    | 6      | 0.2 attacks/sec| $250   | High range and damge but low health           |
+| **Bomb**         | 150    | 75     | 2      | 0.8 attacks/sec| $200   | Hits targeted enemy and directly adjacent ones|
 
-| Name               | Health | Damage | Attack Range | Attack Speed | Currency | Special |
-|--------------------|--------|--------|----------------|----------------|----------|---------|
-| **Goblin**          | 80     | 40     |  1              | 1              | $10       | Quick and basic |
-| **Skeleton**        | 20     | 50     |  1              | 1              | $5        | Very weak, often summoned |
-| **Witch**           | 150    | 70     |  3              | 1              | $10       | Spawns a Skeleton on death |
-| **Bat**             | 10     | 50     |  1              | 0.5            | $2        | Fast attack speed|
-| **Bandit**          | 160    | 30     |  1              | 1              | $8        | Teleports after taking damage |
-| **Necromancer**     | 100    | 20     |  4              | 1.5            | $15       | Spawns **2 Skeletons** on death  |
-| **Slime**           | 40     | 25     |  1              | 1              | $3        | Splits into **2 Slimelets** on death |
-| **Slimelet**        | 10     | 10     |  1              | 1              | $1        | Very weak, often summoned |
-| **Fire Imp**        | 50     | 35     | 2              | 0.8            | $12       | Destroys tower **in front** on death |
+| Name               | Health | Damage | Attack Range   | Attack Speed   | Currency | Special                              |
+|--------------------|--------|--------|----------------|----------------|----------|--------------------------------------|
+| **Goblin**         | 80     | 40     |  1             | 1              | $10      | Quick and basic                      |
+| **Skeleton**       | 20     | 50     |  1             | 1              | $5       | Very weak, often summoned            |
+| **Witch**          | 150    | 70     |  3             | 1              | $10      | Spawns a Skeleton on death           |
+| **Bat**            | 10     | 50     |  1             | 0.5            | $2       | Fast attack speed                    |
+| **Bandit**         | 160    | 30     |  1             | 1              | $8       | Teleports after taking damage        |
+| **Necromancer**    | 100    | 20     |  4             | 1.5            | $15      | Summons **2 Skeletons** on death     |
+| **Slime**          | 40     | 25     |  1             | 1              | $3       | Splits into **2 Slimelets** on death |
+| **Slimelet**       | 10     | 10     |  1             | 1              | $1       | Very weak, often summoned            |
+| **Fire Imp**       | 50     | 35     |  2             | 0.8            | $12      | Destroys tower **in front** on death |

@@ -26,9 +26,9 @@ class Menu:
 
 
     def draw(self):
-        pygame.draw.rect(self.screen, (100, 100, 100), (self.x_offset, 0, self.width, self.height))  # change to tiles later
+        '''Displays the menu button, the towers (and which one is selected), the remove button (and whether it is selected), the currency amount, the health bar, and wave number)'''
+        pygame.draw.rect(self.screen, (100, 100, 100), (self.x_offset, 0, self.width, self.height))
         
-        # Draw Menu button
         pygame.draw.rect(self.screen, (200, 200, 200), (self.width - 100, 10, 90, 35))
         font = pygame.font.Font(None, 44)
         self.screen.blit(font.render(("Menu"), True, (255, 255, 255)), (self.width - 96, 14))
@@ -49,14 +49,13 @@ class Menu:
         font = pygame.font.Font(None, 36)
         currency_text = font.render(f"Currency: ${self.currency}", True, (255, 255, 255))
         self.screen.blit(currency_text, (self.x_offset + 100, y_pos + 250))
+
         pygame.draw.rect(self.screen, (255, 0, 0), (self.x_offset + 100, y_pos + 290, 200, 20))
         pygame.draw.rect(self.screen, (0, 255, 0), (self.x_offset + 100, y_pos + 290, 200 * (self.health / 500), 20))
         font = pygame.font.Font(None, 24)
 
-        # draw wave
         wave_text = font.render(f"Wave: {self.wave}", True, (255, 255, 255))
         self.screen.blit(wave_text, (self.x_offset + 100, y_pos + 320))
-        
 
     def click_menu_bar(self, x_pos, y_pos):
         if self.width - 100 <= x_pos <= self.width - 10 and 10 <= y_pos <= 45:
@@ -75,7 +74,6 @@ class Menu:
             self.remove_clicked = False
             for tower in self.tower_options:
                 tower["selected"] = False
-        
             return True
         return False
 
@@ -105,7 +103,6 @@ class Menu:
                             self.selected_tower = towers.Bomb()
 
                     return tower
-
         return None
 
     def place_tower(self, board, x_pos, y_pos): 
@@ -122,8 +119,6 @@ class Menu:
             return True
             self.remove_clicked = False
         return False
-
-        pygame.draw.rect(self.screen, (255, 255, 255), (self.x_offset + 350, 625, 114, 114), 3)
 
     def click_remove(self, x_pos, y_pos):
         if self.x_offset + 350 <= x_pos <= self.x_offset + 407 and 625 <= y_pos <= 682:
@@ -164,12 +159,12 @@ class Menu:
             return False
         return True
 
-    def quit(self, x_pos, y_pos): # leaves game
+    def quit(self, x_pos, y_pos): # leaves game in game.py
         if self.health <= 0 and self.width/2 - 110 <= x_pos <= self.width/2 - 40 and self.height/2 + 30 <= y_pos <= self.height/2 + 60:
             return True
         return False
 
-    def play_again(self, x_pos, y_pos): # in game.py everything resets
+    def play_again(self, x_pos, y_pos): # resets game in game.py
         if self.health <= 0 and self.width/2 + 40 <= x_pos <= self.width/2 + 100 and self.height/2 + 30 <= y_pos <= self.height/2 + 60:
             self.health = 500
             return True 
@@ -194,8 +189,7 @@ class Menu:
         self.tower_clicked = None
         return False
 
-    def show_tower_health(self, board, x_pos, y_pos): 
-        """Function to display the health bar of the selected tower."""
+    def show_tower_health(self, board, x_pos, y_pos):
         if self.tower_clicked is not None:
             row, col = self.tower_clicked
             if 0 <= col < board.cols and 0 <= row < board.rows:

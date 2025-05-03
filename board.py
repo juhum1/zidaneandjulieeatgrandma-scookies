@@ -86,7 +86,6 @@ class Board:
                                     tower.shoot(enemy, self, i, j, k)
                                     break
 
-
     def death(self):
         # detects enemy deaths and returns currency earned
         currency = 0
@@ -107,7 +106,4 @@ class Board:
                                     i -= 1
                             else:
                                 self.array[i][j].item = result 
-                            
-
         return currency 
-

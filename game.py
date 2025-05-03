@@ -40,7 +40,6 @@ remove = False
 
 enemies_arr = [enemies.Goblin, enemies.Skeleton, enemies.Witch, enemies.Necromancer, enemies.Bat, enemies.Slime, enemies.Bandit, enemies.FireImp]
 
-
 pygame.mixer.init()
 pygame.mixer.music.load("assets/pvz.wav")
 pygame.mixer.music.set_volume(0.5)
@@ -82,6 +81,7 @@ def handle_wave(wave_num, game_board, menu, cur_time, tile_size, enemy_spawned_t
     wave_done = game_board.wave_over(enemies_to_spawn, spawn_rate, cur_time - wave_begin_time)
     return wave_done, enemy_spawned_time, enemy_moved_time, enemies_spawned, wave_cleared
 
+
 while running:
     fps = clock.tick(45)
     cur_time = pygame.time.get_ticks() - paused_total_time
@@ -117,10 +117,8 @@ while running:
                 wave = 0
                 menu = Menu(screen, board_cols * tile_size, width, height, 500) # new menu
 
-
             if menu.click_tower(event.pos[0], event.pos[1], game_board): # necessary to trigger tower health check
                 pass
-
 
             if menu.click_remove(event.pos[0], event.pos[1]):
                 remove = not remove
@@ -134,9 +132,7 @@ while running:
                 play_num += 1
                 wave_cleared = True 
                 enemies_spawned = 0
-                enemy_spawned_time = pygame.time.get_ticks()
-                enemy_moved_time = pygame.time.get_ticks()
-                tower_attack_time = pygame.time.get_ticks()
+                enemy_spawned_time = enemy_moved_time = tower_attack_time = pygame.time.get_ticks()
                 is_paused = False
                 paused_start_time = 0
                 paused_total_time = 0
@@ -170,7 +166,6 @@ while running:
                 menu.set_wave(wave)
                 wave_begin_time = cur_time
         else:
-
             wave_done, enemy_spawned_time, enemy_moved_time, enemies_spawned, wave_cleared = handle_wave(
                 wave, game_board, menu, cur_time, tile_size, enemy_spawned_time, 
                 enemy_moved_time, tower_attack_time, enemies_spawned, wave_begin_time, wave_cleared
@@ -204,7 +199,6 @@ while running:
 
             menu.draw()
             menu.show_tower_health(game_board, pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])
-
 
     if not wave_cleared:
         pygame.draw.rect(screen, (0, 0, 0), (width/2 - 150, height/2 - 75, 300, 150))

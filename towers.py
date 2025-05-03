@@ -4,7 +4,7 @@ import enemies
 import projectile
 
 def scale_image(img):
-    """Scales all tower images to fit within a 80x80 pixel square while maintaining aspect ratio."""
+    # scales all tower images to fit within a 80x80 pixel square while maintaining aspect ratio
     rect = img.get_bounding_rect()
     scale_imageped = img.subsurface(rect).copy()
     scale_factor = min(80 / rect.width, 80 / rect.height)
@@ -34,7 +34,6 @@ class Tower(ABC):
 
     def attack_enemy(self, enemy):
         if self.can_attack():
-
             if enemy.currentHealth > 0:
                 enemy.currentHealth -= self.damage
                 self.lastAttackTime = pygame.time.get_ticks()
@@ -42,19 +41,19 @@ class Tower(ABC):
     def shoot(self, enemy, board, i, j, k):
         if self.can_attack() and enemy.currentHealth > 0:
             new_proj = projectile.Projectile(
-                start_pos=(j * board.tile_size, i * board.tile_size),
-                target=enemy,
-                damage=self.damage,
-                range=self.range,
-                target_y=k * board.tile_size,
-                board=board
+                start_pos = (j * board.tile_size, i * board.tile_size),
+                target = enemy,
+                damage = self.damage,
+                range = self.range,
+                target_y = k * board.tile_size,
+                board = board
             )
             board.projectiles.append(new_proj)
             self.lastAttackTime = pygame.time.get_ticks()
 
+
 class Classic(Tower):
     def __init__(self):
-
         self.maxHealth = 150
         self.lastAttackTime = 0 
         self.currentHealth = self.maxHealth 
@@ -94,6 +93,7 @@ class Fast(Tower):
     def get_sprite_path():
         return "assets/tower.png"
 
+
 class Heavy(Tower):
     def __init__(self):
         self.maxHealth = 300
@@ -113,6 +113,7 @@ class Heavy(Tower):
     @staticmethod
     def get_sprite_path():
         return "assets/heavy.png"
+
 
 class Princess(Tower):
     def __init__(self):
@@ -167,12 +168,12 @@ class Bomb(Tower):
 
             for target in enemies_hit:
                 new_proj = projectile.Projectile(
-                    start_pos=(j * board.tile_size, i * board.tile_size),
-                    target=target,
-                    damage=self.damage,
-                    range=self.range,
-                    target_y=k * board.tile_size,
-                    board=board
+                    start_pos = (j * board.tile_size, i * board.tile_size),
+                    target = target,
+                    damage = self.damage,
+                    range = self.range,
+                    target_y = k * board.tile_size,
+                    board = board
                 )
                 board.projectiles.append(new_proj)
 

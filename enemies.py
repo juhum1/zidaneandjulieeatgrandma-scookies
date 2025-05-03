@@ -129,9 +129,9 @@ class Necromancer(Enemy):
         self.currency = 15
         self.sprite = "assets/necromancer.png"
 
+
     def die(self, board=None):
         return [Skeleton(), Skeleton()]
-
 
 class Slime(Enemy):
     def __init__(self):
@@ -161,7 +161,6 @@ class Slimelet(Enemy):
         self.currency = 1
         self.sprite = "assets/slimelet.png"
 
-
 class FireImp(Enemy):
     def __init__(self):
         super().__init__()
@@ -175,12 +174,10 @@ class FireImp(Enemy):
         self.sprite = "assets/fire_spirit.png"
 
 
-
     def die(self, board=None):
         if board:
             next_row = self.row + 1
             tower = board.array[next_row][self.col].item if next_row < board.rows else None
             if tower and isinstance(tower, towers.Tower):
                 board.array[next_row][self.col].item = None  # explodes tower
-            
         return None

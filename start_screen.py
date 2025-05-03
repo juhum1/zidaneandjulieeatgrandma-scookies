@@ -3,6 +3,7 @@ import enemies
 import towers
 
 class Start_Screen:
+    '''Draws the start screen on game loadup or restart'''
     def __init__(self, screen, width, height):
         self.screen = screen
         self.width = width
@@ -19,6 +20,7 @@ class Start_Screen:
             font = pygame.font.Font(None, 36)
             self.screen.blit(font.render("START", True, (0, 0, 0)), (self.width/2 - 38, self.height/2 + 208))
         else: 
+            # redraws the board and menu for seamless transition to wave 1
             for i in range(game_board.rows):
                 for j in range(game_board.cols):
                     tile_obj = game_board.array[i][j]
